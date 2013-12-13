@@ -13,6 +13,8 @@ if ("$runBasicBundledVideoSampleApp")
   include ':BasicBundledVideoSampleApp'
 if ("$runAdRulesIMASampleApp")
   include ':AdRulesIMASampleApp'
+if ("$runBasicAdobePassSampleApp" && adobepassDependenciesAreSatisfied())
+  include ':BasicAdobePassSampleApp'
 
 boolean freewheelDependenciesAreSatisfied() {
     File dep = file("${rootProject.projectDir}/libs/AdManager.jar")
@@ -22,4 +24,10 @@ boolean freewheelDependenciesAreSatisfied() {
 boolean omnitureDependenciesAreSatisfied() {
     File dep = file("${rootProject.projectDir}/libs/adobe-adms.jar")
     return dep.exists()
+}
+
+boolean adobepassDependenciesAreSatisfied() {
+    File dep1 = file("${rootProject.projectDir}/libs/adobe-accessenabler.jar")
+    File dep2 = file("${rootProject.projectDir}/libs/gson.jar")
+    return dep1.exists() && dep2.exists()
 }

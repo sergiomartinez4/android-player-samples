@@ -1,0 +1,5 @@
+dependencies {
+    compile "com.brightcove.adobepass:android-adobepass-plugin:${anpVersion}"
+    compile files("${rootProject.projectDir}/libs/adobe-accessenabler.jar")
+    compile files("${rootProject.projectDir}/libs/gson.jar")
+}
