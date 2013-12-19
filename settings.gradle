@@ -1,6 +1,6 @@
 
 if ("$runBasicFreewheelSampleApp" && freewheelDependenciesAreSatisfied())
-  include ':BasicFreeWheelSampleApp'
+  include ':BasicFreeWheelSampleApp', ':BasicAkamaiIdentityServiceSampleApp'
 if ("$runBasicIMASampleApp")
   include ':BasicIMASampleApp'
 if ("$runBasicIMAWidevineSampleApp")
@@ -13,6 +13,8 @@ if ("$runBasicBundledVideoSampleApp")
   include ':BasicBundledVideoSampleApp'
 if ("$runAdRulesIMASampleApp")
   include ':AdRulesIMASampleApp'
+if ("$runBasicAkamaiIdentityServiceSampleApp")
+  include ':BasicAkamaiIdentityServiceSampleApp'
 
 boolean freewheelDependenciesAreSatisfied() {
     File dep = file("${rootProject.projectDir}/libs/AdManager.jar")
