@@ -11,6 +11,7 @@ import com.brightcove.player.model.Video;
 import com.brightcove.player.view.BrightcovePlayer;
 import com.brightcove.player.view.BrightcoveVideoView;
 
+import com.brightcove.ais.AkamaiIdentityServicesPlugin;
 /**
  * This app illustrates how to use the Akamai Identity Service Plugin with the
  * Brightcove Player for Android.
@@ -32,7 +33,7 @@ public class MainActivity extends BrightcovePlayer {
         EventEmitter eventEmitter = brightcoveVideoView.getEventEmitter();
         new EventLogger(eventEmitter, true, getClass().getSimpleName());
 
-
+        AkamaiIdentityServicesPlugin aisPlugin = new AkamaiIdentityServicesPlugin(brightcoveVideoView, eventEmitter, this);
 
         // Create the catalog object which will start and play the video.
         Catalog catalog = new Catalog("FqicLlYykdimMML7pj65Gi8IHl8EVReWMJh6rLDcTjTMqdb5ay_xFA..");
