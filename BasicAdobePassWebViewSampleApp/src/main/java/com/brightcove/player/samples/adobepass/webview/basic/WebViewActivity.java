@@ -29,8 +29,9 @@ public class WebViewActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        String ADOBE_PASS_TARGET_URL = getResources().getString(R.string.adobe_pass_target_url);
         Intent intent = getIntent();
-        String url = intent.getStringExtra("url");
+        String url = intent.getStringExtra(ADOBE_PASS_TARGET_URL);
 
         setContentView(R.layout.adobepass_webview_activity_main);
         webView = (WebView) findViewById(R.id.sampleWebView);
@@ -39,7 +40,6 @@ public class WebViewActivity extends Activity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
 
-        Log.v(TAG, "Loading: " + url);
         webView.loadUrl(url);
     }
 

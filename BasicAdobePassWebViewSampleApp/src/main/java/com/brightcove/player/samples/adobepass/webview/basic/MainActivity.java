@@ -50,7 +50,6 @@ public class MainActivity extends BrightcovePlayer implements IAccessEnablerDele
 
     private final String TAG = this.getClass().getSimpleName();
 
-    private static final String STAGING_URL = "sp.auth-staging.adobe.com/adobe-services";
     private static final int WEBVIEW_ACTIVITY = 1;
 
     private EventEmitter eventEmitter;
@@ -66,8 +65,8 @@ public class MainActivity extends BrightcovePlayer implements IAccessEnablerDele
         eventEmitter = brightcoveVideoView.getEventEmitter();
         super.onCreate(savedInstanceState);
 
-        // configure the AdobePass AccessEnabler library
-
+        // configure the AdobePass AccessEnabler library, enable the delegate methods
+        // and use https.
         try {
             accessEnabler = AccessEnabler.Factory.getInstance(this);
             if (accessEnabler != null) {
@@ -96,6 +95,7 @@ public class MainActivity extends BrightcovePlayer implements IAccessEnablerDele
         // The production URL is the default when no URL is passed. If
         // we are using a staging requestorID, we need to pass the staging
         // URL.
+        String STAGING_URL = getResources().getString(R.string.staging_url);
         ArrayList<String> spUrls = new ArrayList<String>();
         spUrls.add(STAGING_URL);
 
@@ -111,26 +111,14 @@ public class MainActivity extends BrightcovePlayer implements IAccessEnablerDele
         // 1. Ignore URL fields on the first call.
         // 2. Make the AdobePass calls
         // 3. Add token to next Media API call.
-
-        // Add a test video to the BrightcoveVideoView.
-        Map<String, String> options = new HashMap<String, String>();
-        List<String> values = new ArrayList<String>(Arrays.asList(VideoFields.DEFAULT_FIELDS));
-        Catalog catalog = new Catalog("ErQk9zUeDVLIp8Dc7aiHKq8hDMgkv5BFU7WGshTc-hpziB3BuYh28A..");
-        catalog.findPlaylistByReferenceID("stitch", options, new PlaylistListener() {
-            public void onPlaylist(Playlist playlist) {
-                brightcoveVideoView.addAll(playlist.getVideos());
-            }
-
-            public void onError(String error) {
-                Log.e(TAG, error);
-            }
-        });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.v(TAG, "onActivityResult: " + requestCode + ", " + resultCode + ", " + data);
         super.onActivityResult(requestCode, resultCode, data);
+        // Move to get the authentication token if the login was successful, otherwise
+        // null out the provider.
         if (resultCode == RESULT_CANCELED) {
             accessEnabler.setSelectedProvider(null);
         } else if (resultCode == RESULT_OK) {
@@ -146,6 +134,7 @@ public class MainActivity extends BrightcovePlayer implements IAccessEnablerDele
         super.onBackPressed();
     }
 
+    // Helper method to perform the signature generation needed for the access enabler.
     private String generateSignature(PrivateKey privateKey, String data) throws AccessEnablerException {
         try {
             Signature rsaSigner = Signature.getInstance("SHA256WithRSA");
@@ -160,6 +149,7 @@ public class MainActivity extends BrightcovePlayer implements IAccessEnablerDele
         }
     }
 
+    // Helper method for extracting the user supplied private key.
     private PrivateKey extractPrivateKey(InputStream PKCSFile, String password) {
         if (PKCSFile == null)
             return null;
@@ -200,7 +190,8 @@ public class MainActivity extends BrightcovePlayer implements IAccessEnablerDele
     public void setAuthenticationStatus(int status, String errorCode) {
         Log.v(TAG, "setAuthenticationStatus: " + status + " , " + errorCode);
         if (status == AccessEnabler.ACCESS_ENABLER_STATUS_SUCCESS) {
-            accessEnabler.getAuthorization("2149332630001");
+            String resourceId = getResources().getString(R.string.resource_id);
+            accessEnabler.getAuthorization(resourceId);
         } else if (status == AccessEnabler.ACCESS_ENABLER_STATUS_ERROR) {
             Log.v(TAG, "setAuthenticationStatus: authentication failed.");
         }
@@ -232,8 +223,9 @@ public class MainActivity extends BrightcovePlayer implements IAccessEnablerDele
     @Override
     public void navigateToUrl(String url) {
         Log.v(TAG, "navigateToUrl: " + url);
+        String ADOBE_PASS_TARGET_URL = getResources().getString(R.string.adobe_pass_target_url);
         Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
-        intent.putExtra("url", url);
+        intent.putExtra(ADOBE_PASS_TARGET_URL, url);
         startActivityForResult(intent, WEBVIEW_ACTIVITY);
     }
 

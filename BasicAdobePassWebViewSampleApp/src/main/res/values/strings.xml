@@ -1,6 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- Application name used in the title bar. -->
     <string name="app_name">Basic AdobePass WebView Sample App</string>
 
+    <!-- The requestor id used for the authentication workflow. -->
     <string name="requestor_id">BRIGHTCOVE</string>
+
+    <!-- The password for the private key used to set the requestor id. -->
     <string name="credential_store_password">adobepass</string>
+
+    <!-- Constant for URLs passed to the webview. -->
+    <string name="adobe_pass_target_url">adobePassTargetUrl</string>
+
+    <!-- The URL used for log in purposes. -->
+    <string name="staging_url">sp.auth-staging.adobe.com/adobe-services</string>
+
+    <!-- The resource identifier for a protected media asset. -->
+    <string name="resource_id"></string>
+
+    <!-- A media URL to test playback of AdobePass-protected content. -->
+    <string name="protected_media_url"></string>
+
 </resources>
