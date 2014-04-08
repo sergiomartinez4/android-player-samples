@@ -17,6 +17,8 @@ if (Boolean.valueOf("$runBasicAdobePassWebViewSampleApp") && adobepassDependenci
   include ':BasicAdobePassWebViewSampleApp'
 if (Boolean.valueOf("$runBasicAISWebViewSampleApp"))
   include ':BasicAISWebViewSampleApp'
+if (Boolean.valueOf("$runHLSPlayerIMASampleApp"))
+  include ':HLSPlayerIMASampleApp'
 if (Boolean.valueOf("$runHLSPlayerSampleApp"))
   include ':HLSPlayerSampleApp'
 if (Boolean.valueOf("$runWebVTTSampleApp"))
