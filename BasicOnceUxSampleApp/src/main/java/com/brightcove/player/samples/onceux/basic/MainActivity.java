@@ -93,6 +93,7 @@ public class MainActivity extends BrightcovePlayer {
             @Override
             public void processEvent(Event event) {
                 Log.i(TAG, "Ad data processing complete.  Starting video...");
+                fullScreen();
                 brightcoveVideoView.setVideoPath(onceUxContentUrl);
                 brightcoveVideoView.start();
             }
