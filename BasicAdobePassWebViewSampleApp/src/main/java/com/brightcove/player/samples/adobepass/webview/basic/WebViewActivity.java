@@ -55,6 +55,7 @@ public class WebViewActivity extends Activity {
                 Intent result = new Intent(WebViewActivity.this, MainActivity.class);
                 setResult(RESULT_OK, result);
                 finish();
+                return true;
             }
 
             return false;
