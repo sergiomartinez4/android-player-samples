@@ -1,4 +1,4 @@
 dependencies {
-    compile "com.brightcove.player:android-omniture-plugin:${anpVersion}@aar"
-    compile files("${rootProject.projectDir}/libs/adobe-adms.jar")
+    compile "com.brightcove.player:android-omniture-plugin:4.1.15@aar"
+    compile files("${rootProject.projectDir}/libs/adobeMobileLibrary.jar")
 }
