@@ -24,8 +24,6 @@ import com.brightcove.plugin.onceux.event.OnceUxEventType;
  *
  * - videos are clickable during ad playback and visit the appropriate website,
  *
- * - the companion banner is shown on page switched appropriately as new ads are played 
- *
  * It also covers ensuring that an ad server URL accompanies the content URL.
  *
  * @author Paul Michael Reilly
@@ -45,12 +43,9 @@ public class MainActivity extends BrightcovePlayer {
 
     // The OnceUX plugin VMAP data URL.
     private String onceUxVMAPDataUrl = "http://onceux.unicornmedia.com/now/ads/vmap/od/auto/95ea75e1-dd2a-4aea-851a-28f46f8e8195/43f54cc0-aa6b-4b2c-b4de-63d707167bf9/9b118b95-38df-4b99-bb50-8f53d62f6ef8??umtp=0";
-    // Original from Criss: "http://onceux.unicornmedia.com/now/ads/vmap/od/auto/b11dbc9b-9d90-4edb-b4ab-769e0049209b/2455340c-8dcd-412e-a917-c6fadfe268c7/3a41c6e4-93a3-4108-8995-64ffca7b9106/bigbuckbunny?umtp=0";
 
-    // The OnceUX plugin content URL.
+    // The OnceUX plugin content URL.  Starbucks ads wrapping a trailer for a racing video game.
     private String onceUxContentUrl = "http://cdn5.unicornmedia.com/now/stitched/mp4/95ea75e1-dd2a-4aea-851a-28f46f8e8195/00000000-0000-0000-0000-000000000000/3a41c6e4-93a3-4108-8995-64ffca7b9106/9b118b95-38df-4b99-bb50-8f53d62f6ef8/0/0/105/1438852996/content.mp4";
-    // Content suggested by Unicorn for the data url: "http://once.unicornmedia.com/now/od/auto/95ea75e1-dd2a-4aea-851a-28f46f8e8195/43f54cc0-aa6b-4b2c-b4de-63d707167bf9/9b118b95-38df-4b99-bb50-8f53d62f6ef8/content.once";
-    // Original from Criss: "http://api16-phx.unicornmedia.com/now/stitched/mp4/b11dbc9b-9d90-4edb-b4ab-769e0049209b/2455340c-8dcd-412e-a917-c6fadfe268c7/3a41c6e4-93a3-4108-8995-64ffca7b9106/18bed8d5-15ec-40c7-8ac8-dd38db9832d9/content.mp4?oasid=e277545e-9b0f-4af8-bf88-6034af781892&umtp=0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +63,7 @@ public class MainActivity extends BrightcovePlayer {
         // started and pause it until the ad data is ready or an error condition is detected.
         // On either event the plugin will continue playing the video.
         registerEventHandlers();
+        fullScreen();
         OnceUxPlugin plugin = new OnceUxPlugin(this, brightcoveVideoView);
         plugin.processServerData(onceUxVMAPDataUrl);
     }
@@ -93,7 +89,6 @@ public class MainActivity extends BrightcovePlayer {
             @Override
             public void processEvent(Event event) {
                 Log.i(TAG, "Ad data processing complete.  Starting video...");
-                fullScreen();
                 brightcoveVideoView.setVideoPath(onceUxContentUrl);
                 brightcoveVideoView.start();
             }
