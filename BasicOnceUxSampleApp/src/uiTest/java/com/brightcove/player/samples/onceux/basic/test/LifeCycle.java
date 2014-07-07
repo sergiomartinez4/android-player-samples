@@ -15,7 +15,7 @@ import com.android.uiautomator.testrunner.UiAutomatorTestCase;
  * of the playhead position if the user hits the home button while playing
  * or paused, or during specific events in the timeline.
  */
-public class LifeCycle extends OnceUxUiAutomatorBaseTestCase {
+public class LifeCycle extends OnceUxUiAutomatorBase {
 
     /**
      * The Android log tag.
@@ -49,7 +49,7 @@ public class LifeCycle extends OnceUxUiAutomatorBaseTestCase {
         super.playVideo();
         TimeUnit.SECONDS.sleep(5);
         lifeCycleInitialCheck();
-        super.seekControls();
+        super.toggleSeekControlsVisibility();
         lifeCycleFollowUpCheck();
         assertTrue("Strings not identical.", stringComparison());
         // Leaving the sample app quickly after re-entering it can cause the sample app to crash.
@@ -67,7 +67,7 @@ public class LifeCycle extends OnceUxUiAutomatorBaseTestCase {
         super.playVideo();
         TimeUnit.SECONDS.sleep(5);
         pauseVideo();
-        super.seekControls();
+        super.toggleSeekControlsVisibility();
         lifeCycleInitialCheck();
         lifeCycleFollowUpCheck();
         assertTrue("Strings not identical.", stringComparison());
@@ -85,7 +85,7 @@ public class LifeCycle extends OnceUxUiAutomatorBaseTestCase {
         super.playVideo();
         TimeUnit.SECONDS.sleep(45);
         lifeCycleInitialCheck();
-        super.seekControls();
+        super.toggleSeekControlsVisibility();
         lifeCycleFollowUpCheck();
         assertTrue("Strings not identical.", stringComparison());
         TimeUnit.SECONDS.sleep(5);
@@ -121,14 +121,14 @@ public class LifeCycle extends OnceUxUiAutomatorBaseTestCase {
     private void pauseVideo() throws Exception {
         // First, we bring up the play/seek control menu, then press pause.
         UiObject pauseButton = new UiObject(new UiSelector().resourceId("android:id/pause"));
-        super.seekControls();
+        super.toggleSeekControlsVisibility();
         Log.v(TAG, "Pressing Pause...");
         try {
             pauseButton.click();
         } catch (UiObjectNotFoundException pauseButtonNotFound) {
             Log.v(TAG, "Pause button not found.");
             pauseButtonNotFound.printStackTrace();
-            super.seekControls();
+            super.toggleSeekControlsVisibility();
             pauseButton.click();
         }
     }
@@ -142,7 +142,7 @@ public class LifeCycle extends OnceUxUiAutomatorBaseTestCase {
     private void lifeCycleInitialCheck() throws Exception {
         Log.v(TAG, "Beginning Life Cycle Check.");
         // First, to make note of the playhead position, we reveal seek controls and examine the text view that has the time elapsed. 
-        super.seekControls();
+        super.toggleSeekControlsVisibility();
         UiObject adTimeBeforeLifeCycle = new UiObject(new UiSelector().resourceId("android:id/time_current"));
         // Because of the slight inconsistency of the Sample App, we set up try-catch blocks that will be prepared for an exception.
         try {
@@ -150,7 +150,7 @@ public class LifeCycle extends OnceUxUiAutomatorBaseTestCase {
         } catch (UiObjectNotFoundException uiPlayheadPositionMissing) {
             Log.v(TAG, "Initial Ad Time not found. Trying again.");
             // This is often as a result of the seek controls (and consequently the playhead location) being hidden, so we will show them and retry.
-            super.seekControls();
+            super.toggleSeekControlsVisibility();
             adTimeStringBeforeLifeCycle = adTimeBeforeLifeCycle.getText();            
         }
         // Then we leave the app, beginning the check, and return to the app.
@@ -179,7 +179,7 @@ public class LifeCycle extends OnceUxUiAutomatorBaseTestCase {
         } catch (UiObjectNotFoundException uiPlayheadPositionMissing) {
             Log.v(TAG, "Follow up Ad Time not found. Trying again.");
             // This is often as a result of the seek controls (and consequently the playhead location) being hidden, so we will show them and retry.
-            super.seekControls();
+            super.toggleSeekControlsVisibility();
             adTimeStringAfterLifeCycle = adTimeAfterLifeCycle.getText();
         }
     }

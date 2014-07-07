@@ -85,7 +85,7 @@ public class BasicCompanionAdTest extends OnceUxUiAutomatorBaseTestCase {
         TimeUnit.SECONDS.sleep(5);
         Log.v(TAG, "Prerolls...");
         assertTrue("Companion ad still present.", companionAd.waitUntilGone(30000));
-        super.seekControls();
+        super.toggleSeekControlsVisibility();
         //assertFalse("Companion ad still present after prerolls.", companionAd.exists());
 
         // Next, the companion ad that accompanies the Midroll ad break is tested.
@@ -94,7 +94,7 @@ public class BasicCompanionAdTest extends OnceUxUiAutomatorBaseTestCase {
         TimeUnit.SECONDS.sleep(5);
         Log.v(TAG, "Midrolls...");
         assertTrue("Companion ad still present.", companionAd.waitUntilGone(30000));
-        super.seekControls();
+        super.toggleSeekControlsVisibility();
         assertFalse("Companion ad still present after midrolls.", companionAd.exists());
 
         // Next, the companion ad that accompanies the Midroll ad break is tested.
@@ -103,7 +103,7 @@ public class BasicCompanionAdTest extends OnceUxUiAutomatorBaseTestCase {
         TimeUnit.SECONDS.sleep(5);
         Log.v(TAG, "Postrolls...");
         assertTrue("Companion ad still present.", companionAd.waitUntilGone(170000));
-        super.seekControls();
+        super.toggleSeekControlsVisibility();
         assertFalse("Companion ad still present after postrolls.", companionAd.exists());
         Log.v(TAG, "Finished testCompanionAdVanish");
     }

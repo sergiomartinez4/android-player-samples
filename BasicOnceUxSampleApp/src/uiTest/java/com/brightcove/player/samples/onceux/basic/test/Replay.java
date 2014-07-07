@@ -39,12 +39,12 @@ public class Replay extends OnceUxUiAutomatorBaseTestCase {
         UiObject currentTimeUiObject = new UiObject(new UiSelector().resourceId("android:id/time_current"));
         String currentTimeString;
         try {
-            super.seekControls();
+            super.toggleSeekControlsVisibility();
             Log.v(TAG, "Getting current time.");
             currentTimeString = currentTimeUiObject.getText();
         } catch (UiObjectNotFoundException currentTimeNotFound) {
             Log.v(TAG, "Current time not found. Retrying...");
-            super.seekControls();
+            super.toggleSeekControlsVisibility();
             currentTimeString = currentTimeUiObject.getText();
             Log.v(TAG, "Current time is " + currentTimeString);
         }

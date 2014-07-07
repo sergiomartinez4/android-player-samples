@@ -73,7 +73,7 @@ public class TestPlayStartMess extends OnceUxUiAutomatorBaseTestCase {
             playButton.click();
         } catch (UiObjectNotFoundException playButtonMissing) {
             Log.v(TAG, "Play button not found. Trying again.");
-            seekControls();
+            super.toggleSeekControlsVisibility();
             playButton.click();
         }
     }
