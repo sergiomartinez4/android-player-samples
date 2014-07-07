@@ -3,20 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity" >
 
-    <com.brightcove.player.view.BrightcoveVideoView
+    <com.brightcove.player.view.SeamlessVideoView
         android:id="@+id/brightcove_video_view"
         android:layout_width="match_parent"
         android:layout_height="280dp"
-        android:layout_gravity="top|top"/>
+        android:layout_gravity="center_horizontal|top"/>
 
     <FrameLayout
         android:id="@+id/ad_frame"
-        android:background="#80000000"
+        android:background="#0DBD5F"
         android:layout_width="300dp"
         android:layout_height="250dp"
-        android:layout_gravity="center_horizontal|bottom"
-        android:visibility="invisible" />
+        android:layout_gravity="center_horizontal|bottom" />
 
 </merge>
