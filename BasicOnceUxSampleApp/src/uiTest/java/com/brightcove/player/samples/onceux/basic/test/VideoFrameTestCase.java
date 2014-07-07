@@ -12,6 +12,12 @@ import com.android.uiautomator.core.UiSelector;
 import com.android.uiautomator.testrunner.UiAutomatorTestCase;
 
 /**
+ * This class provides a method that tests the video frame bounds to ensure that the video is the same
+ * size/location both before and after play. This is done by waiting to play when the super.setUp() is
+ * completed, gathering the information, then inducing a super.tearDown() and super.setUp(), then 
+ * playing the new instance of the sample app, gathering the information on the frame boundaries, and 
+ * comparing the two sets of boundaries.
+ *
  * @author Bryan Gregory Scott -- bscott@brightcove.com
  */
 public class UiAutomatorTest extends OnceUxUiAutomatorBaseTestCase {
