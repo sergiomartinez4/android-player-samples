@@ -16,7 +16,7 @@ import com.android.uiautomator.testrunner.UiAutomatorTestCase;
  * BasicCompanionAdTest would check for companion ads and their links
  * for when the occasion arrises that they are put into the Sample App.
  */
-public class BasicCompanionAdTest extends OnceUxUiAutomatorBaseTestCase {
+public class BasicCompanionAdTest extends UiAutomatorTestCase {
 
     /**
      * The Android logcat tag.

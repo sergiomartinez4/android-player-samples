@@ -12,7 +12,7 @@ import com.android.uiautomator.testrunner.UiAutomatorTestCase;
  * instrumentation tests. Test Methods are organized by a From location
  * (where the seek is initialized) and a To location (the seek's destination).
  */
-public class SeekTests extends UiAutomatorTestCase {
+public class SeekTests extends OnceUxUiAutomatorBase {
 
     //For Logcat.
     private final String TAG = this.getClass().getSimpleName();

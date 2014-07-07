@@ -17,7 +17,7 @@ import com.android.uiautomator.testrunner.UiAutomatorTestCase;
  * of actually playing over from the beginning after play has stopped entirely. It also checks
  * that ads can be skipped.
  */
-public class Replay extends OnceUxUiAutomatorBaseTestCase {
+public class Replay extends OnceUxUiAutomatorBase {
 
     /**
      * The Android logcat tag.
