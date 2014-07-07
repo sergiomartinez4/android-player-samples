@@ -18,7 +18,7 @@ import com.android.uiautomator.testrunner.UiAutomatorTestCase;
  * 
  * @author Bryan Gregory Scott -- bscott@brightcove.com
  */
-public class TestPlayStartMess extends OnceUxUiAutomatorBaseTestCase {
+public class TestPlayStartMess extends OnceUxUiAutomatorBase {
 
     /**
      * The Android logcat tag.
