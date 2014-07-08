@@ -126,7 +126,7 @@ public class LifeCycle extends OnceUxUiAutomatorBase {
         try {
             pauseButton.click();
         } catch (UiObjectNotFoundException pauseButtonNotFound) {
-            Log.v(TAG, "Pause button not found.");
+            Log.v(TAG, "Pause button not found. Trying again...");
             pauseButtonNotFound.printStackTrace();
             super.toggleSeekControlsVisibility();
             pauseButton.click();
