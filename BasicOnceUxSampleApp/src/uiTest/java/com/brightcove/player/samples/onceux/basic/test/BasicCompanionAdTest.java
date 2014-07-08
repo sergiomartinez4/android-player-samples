@@ -36,7 +36,7 @@ public class BasicCompanionAdTest extends OnceUxUiAutomatorBase {
 
     // Test Methods
     /**
-     * Makes the assertion as to whether or not there should be companion ads with the ad breaks.
+     * Makes the assertion as that there should be a companion ad in the ad breaks.
      */
     public void testCompanionAd() throws Exception {
         Log.v(TAG, "Beginning testCompanionAd");
@@ -73,36 +73,36 @@ public class BasicCompanionAdTest extends OnceUxUiAutomatorBase {
      * the utility methods are done, it is asserted that the Companion Ad will vanish within the next 5 
      * seconds. Much of the time a false positive arrives as the seek controls appear when the content 
      * block begins, and can hide the companion ad from UiAutomator, so next the seek controls are hidden
-     *  and it is asserted that the companion ad is gone. Then, the test waits for the next ad break to begin.
+     * and it is asserted that the companion ad is gone. Then, the test waits for the next ad break to begin.
      */
     public void testCompanionAdVanish() throws Exception {
         Log.v(TAG, "Beginning testCompanionAdVanish");
         super.playVideo();
 
-        // The following checks that the companion ad vanishes after prerolls.
+        // The following tests that the companion ad vanishes after prerolls.
         assertTrue("Ad Break did not begin within given time.", adText.waitForExists(5000));
+        Log.v(TAG, "Prerolls...");
         companionCheck();
         TimeUnit.SECONDS.sleep(5);
-        Log.v(TAG, "Prerolls...");
-        assertTrue("Companion ad still present.", companionAd.waitUntilGone(30000));
+        assertTrue("Ad Break did not finish within given time.", companionAd.waitUntilGone(30000));
         super.toggleSeekControlsVisibility();
         assertFalse("Companion ad still present after prerolls.", companionAd.exists());
 
         // Next, the companion ad that accompanies the Midroll ad break is tested.
         assertTrue("Ad Break did not begin within given time.", adText.waitForExists(35000));
+        Log.v(TAG, "Midrolls...");
         companionCheck();
         TimeUnit.SECONDS.sleep(5);
-        Log.v(TAG, "Midrolls...");
-        assertTrue("Companion ad still present.", companionAd.waitUntilGone(30000));
+        assertTrue("Ad Break did not finish within given time.", companionAd.waitUntilGone(30000));
         super.toggleSeekControlsVisibility();
         assertFalse("Companion ad still present after midrolls.", companionAd.exists());
 
-        // Next, the companion ad that accompanies the Midroll ad break is tested.
-        assertTrue("Ad Break did not begin within given time.", adText.waitForExists(170000));
+        // Next, the companion ad that accompanies the Postroll ad break is tested.
+        assertTrue("Ad Break did not begin within given time.", adText.waitForExists(112000));
+        Log.v(TAG, "Postrolls...");
         companionCheck();
         TimeUnit.SECONDS.sleep(5);
-        Log.v(TAG, "Postrolls...");
-        assertTrue("Companion ad still present.", companionAd.waitUntilGone(170000));
+        assertTrue("Ad Break did not finish within given time.", companionAd.waitUntilGone(30000));
         super.toggleSeekControlsVisibility();
         assertFalse("Companion ad still present after postrolls.", companionAd.exists());
         Log.v(TAG, "Finished testCompanionAdVanish");
@@ -113,8 +113,8 @@ public class BasicCompanionAdTest extends OnceUxUiAutomatorBase {
 
     /**
      * companionCheck returns <code>true</code> if it finds the companion and, and <code>false</code> if it does not find
-     * it. The method searches for the companion ad frame, using its resource id, <code>android:id/ad_frame</code>,
-     * then it finds the companion ad itself using the frame as a parent Ui Object.
+     * it. The method searches for the companion ad frame, using its resource id, <code>android:id/ad_frame</code>
+     * Then, it finds the companion ad itself using the frame as a parent Ui Object.
      */
     private boolean companionCheck() throws Exception {
         Log.v(TAG, "Beginning companionCheck");

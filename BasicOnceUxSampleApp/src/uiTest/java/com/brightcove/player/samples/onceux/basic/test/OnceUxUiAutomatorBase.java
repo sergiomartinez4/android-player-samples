@@ -157,13 +157,21 @@ public abstract class OnceUxUiAutomatorBase extends UiAutomatorTestCase {
         Log.v(TAG, "First instance of seek controls has occurred.");
         toggleSeekControlsVisibility();
         Log.v(TAG, "Seek controls hidden.");
-        if (playButton.waitForExists(10000)) {
-            Log.v(TAG, "Pressing Play...");
+        playButton.waitForExists(10000);
+        Log.v(TAG, "Pressing Play...");
+        try {
             playButton.click();
-        } else {
-            Log.v(TAG, "Play button not found. Trying again.");
-            toggleSeekControlsVisibility();
-            playButton.click();
+        } catch (UiObjectNotFoundException playNotFound1) {
+            try {
+                playNotFound1.printStackTrace();
+                Log.v(TAG, "Play button not found. Trying again.");
+                toggleSeekControlsVisibility();
+                playButton.click();
+            } catch (UiObjectNotFoundException playNotFound2) {
+                playNotFound2.printStackTrace();
+                Log.v(TAG, "Play button not found.");
+                fail("Play Unsuccessful.");
+            }
         }
     }
 
