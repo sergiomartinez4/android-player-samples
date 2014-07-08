@@ -86,7 +86,7 @@ public class BasicCompanionAdTest extends OnceUxUiAutomatorBase {
         Log.v(TAG, "Prerolls...");
         assertTrue("Companion ad still present.", companionAd.waitUntilGone(30000));
         super.toggleSeekControlsVisibility();
-        //assertFalse("Companion ad still present after prerolls.", companionAd.exists());
+        assertFalse("Companion ad still present after prerolls.", companionAd.exists());
 
         // Next, the companion ad that accompanies the Midroll ad break is tested.
         assertTrue("Ad Break did not begin within given time.", adText.waitForExists(35000));

@@ -70,7 +70,7 @@ public class Replay extends OnceUxUiAutomatorBase {
         } else {
             Log.v(TAG, "Ad Marker Text not visible.");
         }
-        assertFalse("Failure: Ad Break Found.", (adMarkerText.waitForExists(90000)));
+        assertTrue("Failure: Ad Break Not Found.", (adMarkerText.waitForExists(30000)));
         Log.v(TAG, "Finished testReplayCheckAdBreaks");
     }
 

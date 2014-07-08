@@ -42,7 +42,7 @@ public class VideoFrameTestCase extends OnceUxUiAutomatorBase {
      */
     public void testVideoFrameBounds() throws Exception {
         Log.v(TAG, "Beginning testPlayStartMessViewBounds");
-        TimeUnit.SECONDS.sleep(12);
+        TimeUnit.SECONDS.sleep(2);
         UiObject brightcoveVideoView = new UiObject(new UiSelector().resourceId("com.brightcove.player.samples.onceux.basic:id/brightcove_video_view"));
         UiObject videoView = brightcoveVideoView.getChild(new UiSelector().className(android.view.View.class));
         String divider = " ";
