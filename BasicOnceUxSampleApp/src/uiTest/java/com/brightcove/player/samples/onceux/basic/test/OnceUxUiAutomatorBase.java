@@ -152,12 +152,15 @@ public abstract class OnceUxUiAutomatorBase extends UiAutomatorTestCase {
      */
     protected void playVideo() throws Exception {
         // First, wait for the Sample App to entirely process the video and we tap the screen to reveal the seek controls and press play.
-        TimeUnit.SECONDS.sleep(6);
         UiObject playButton = new UiObject(new UiSelector().resourceId("android:id/pause"));
-        Log.v(TAG, "Pressing Play...");
-        try {
+        playButton.waitForExists(2000);
+        Log.v(TAG, "First instance of seek controls has occurred.");
+        toggleSeekControlsVisibility();
+        Log.v(TAG, "Seek controls hidden.");
+        if (playButton.waitForExists(10000)) {
+            Log.v(TAG, "Pressing Play...");
             playButton.click();
-        } catch (UiObjectNotFoundException playButtonMissing) {
+        } else {
             Log.v(TAG, "Play button not found. Trying again.");
             toggleSeekControlsVisibility();
             playButton.click();
