@@ -85,26 +85,6 @@ public class LearnMoreTestCase extends OnceUxUiAutomatorBase {
         adBreakHandler();
     }
 
-    /**
-     * testLearnMoreLink does an actual press of the Learn More Button, and asserts that when the
-     * browser loads, the url should contain "starbucks.com," a context-sensitive url specification.
-     * If the Learn More button is not present when the test tries to click on it, then the test fails.
-     */
-    public void testLearnMoreLink() throws Exception {
-        Log.v(TAG, "Beginning testLearnMoreLink");
-        super.playVideo();
-        shouldHaveLearnMore = true;
-        assertTrue("Ad Break did not begin within given time.", adText.waitForExists(5000));
-        UiObject learnMoreAdUrl = new UiObject(new UiSelector().textContains("starbucks.com"));
-        if (learnMoreCheck()) {
-            companionAd.clickAndWaitForNewWindow();
-        } else {
-            fail("Learn More Button not found.");
-        }
-        assertTrue("Learn More Button did not link to correct url.", learnMoreAdUrl.waitForExists(15000));
-        Log.v(TAG, "Finished testCompanionAdLink");
-    }
-
 
     // Utility Methods
 

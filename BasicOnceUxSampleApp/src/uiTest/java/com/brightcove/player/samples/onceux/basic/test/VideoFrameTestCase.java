@@ -42,7 +42,12 @@ public class VideoFrameTestCase extends OnceUxUiAutomatorBase {
      */
     public void testVideoFrameBounds() throws Exception {
         Log.v(TAG, "Beginning testPlayStartMessViewBounds");
-        TimeUnit.SECONDS.sleep(2);
+        // The play button is being used to check when seek controls first appear,
+        // which is when the video gets its first size and location.
+        UiObject playButton = new UiObject(new UiSelector().resourceId("android:id/pause"));
+        playButton.waitForExists(3000);
+        super.toggleSeekControlsVisibility();
+
         UiObject brightcoveVideoView = new UiObject(new UiSelector().resourceId("com.brightcove.player.samples.onceux.basic:id/brightcove_video_view"));
         UiObject videoView = brightcoveVideoView.getChild(new UiSelector().className(android.view.View.class));
         String divider = " ";
@@ -60,9 +65,12 @@ public class VideoFrameTestCase extends OnceUxUiAutomatorBase {
         super.tearDown();
         super.setUp();
 
-        // This next chunk of code gathers the second set of video bounds, and convers them into four ints.
+        // To get the follow up video bounds, we simply play the video. Waiting ten seconds
+        // removes the need to worry about its initialization process or seek controls interfering.
         super.playVideo();
         TimeUnit.SECONDS.sleep(10);
+
+        // This next chunk of code gathers the second set of video bounds, and convers them into four ints.
         Rect videoBoundsRectangle2 = videoView.getBounds();
         String videoBoundsString2 = videoBoundsRectangle2.flattenToString();
         String[] fragments2 = videoBoundsString2.split(divider);
