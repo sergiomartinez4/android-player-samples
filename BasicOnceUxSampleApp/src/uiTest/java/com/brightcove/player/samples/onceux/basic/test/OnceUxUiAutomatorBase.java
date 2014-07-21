@@ -147,10 +147,8 @@ public abstract class OnceUxUiAutomatorBase extends UiAutomatorTestCase {
      * created as a separate entity to the tests and setUp to help prevent subtle changes from
      * breaking the sample app before function has begun. A universal method helps in this case,
      * and in order to keep the setUp method universal across all test cases, play was kept separate.
-     *
-     * @throws UiObjectNotFoundException playButtonMissing when the seek controls are hidden.
      */
-    protected void playVideo() throws Exception {
+    protected void playVideo() {
         // First, wait for the Sample App to entirely process the video and we tap the screen to reveal the seek controls and press play.
         UiObject playButton = new UiObject(new UiSelector().resourceId("android:id/pause"));
         playButton.waitForExists(2000);

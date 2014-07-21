@@ -25,12 +25,12 @@ public class LifeCycle extends OnceUxUiAutomatorBase {
     /**
      * The string that contains the playback time before the Life Cycle process.
      */
-    private String adTimeStringBeforeLifeCycle;
+    private String currentTimeStringBeforeLifeCycle;
 
     /**
      * The string that contains the playback time after the Life Cycle process.
      */
-    private String adTimeStringAfterLifeCycle;
+    private String currentTimeStringAfterLifeCycle;
 
 
     // Test Methods (makes assertions and specifies the location of testing)
@@ -48,10 +48,8 @@ public class LifeCycle extends OnceUxUiAutomatorBase {
         Log.v(TAG, "Beginning testLifeCycleAdBreakPlaying");
         super.playVideo();
         TimeUnit.SECONDS.sleep(5);
-        lifeCycleInitialCheck();
-        super.toggleSeekControlsVisibility();
-        lifeCycleFollowUpCheck();
-        assertTrue("Strings not identical.", stringComparison());
+        lifeCycleTime();
+        stringComparison();
         // Leaving the sample app quickly after re-entering it can cause the sample app to crash.
         // However, if given a moment to compose itself, this can be avoided. Hence the following delay.
         TimeUnit.SECONDS.sleep(5);
@@ -67,10 +65,8 @@ public class LifeCycle extends OnceUxUiAutomatorBase {
         super.playVideo();
         TimeUnit.SECONDS.sleep(5);
         pauseVideo();
-        super.toggleSeekControlsVisibility();
-        lifeCycleInitialCheck();
-        lifeCycleFollowUpCheck();
-        assertTrue("Strings not identical.", stringComparison());
+        lifeCycleTime();
+        stringComparison();
         Log.v(TAG, "Finished testLifeCycleAdBreakPaused");
     }
 
@@ -84,13 +80,11 @@ public class LifeCycle extends OnceUxUiAutomatorBase {
         Log.v(TAG, "Beginning testLifeCycleContentBlockPlaying");
         super.playVideo();
         TimeUnit.SECONDS.sleep(45);
-        lifeCycleInitialCheck();
-        super.toggleSeekControlsVisibility();
-        lifeCycleFollowUpCheck();
-        assertTrue("Strings not identical.", stringComparison());
-        TimeUnit.SECONDS.sleep(5);
+        lifeCycleTime();
+        stringComparison();
         // Leaving the sample app quickly after re-entering it can cause the sample app to crash.
         // However, if given a moment to compose itself, this can be avoided. Hence the following delay.
+        TimeUnit.SECONDS.sleep(5);
         Log.v(TAG, "Finished testLifeCycleContentBlockPlaying");
     }
     /**
@@ -102,12 +96,20 @@ public class LifeCycle extends OnceUxUiAutomatorBase {
         super.playVideo();
         TimeUnit.SECONDS.sleep(45);
         pauseVideo();
-        lifeCycleInitialCheck();
-        lifeCycleFollowUpCheck();
-        assertTrue("Strings not identical.", stringComparison());
+        lifeCycleTime();
+        stringComparison();
         Log.v(TAG, "Finished testLifeCycleContentBlockPaused");
     }
 
+    public void testLifeCycleAdBreakSeekControls() throws Exception {
+        Log.v(TAG, "Beginning testLifeCycleAdBreakSeekControls");
+        super.playVideo();
+        TimeUnit.SECONDS.sleep(5);
+        lifeCycleTime();
+        UiObject seekBar = new UiObject(new UiSelector().resourceId("android:id/mediacontroller_progress"));
+        assertFalse("Failure: Seek Bar found.", seekBar.waitForExists(10000));
+        Log.v(TAG, "Finished testLifeCycleContentBlockPaused");
+    }
 
     // Utility Methods
 
@@ -118,99 +120,90 @@ public class LifeCycle extends OnceUxUiAutomatorBase {
      * utility method will execute a play function. This is because pause and play functions are both
      * mapped to a single resource id, "android:id/pause".
      */
-    private void pauseVideo() throws Exception {
+    private void pauseVideo() {
         // First, we bring up the play/seek control menu, then press pause.
         UiObject pauseButton = new UiObject(new UiSelector().resourceId("android:id/pause"));
         super.toggleSeekControlsVisibility();
         Log.v(TAG, "Pressing Pause...");
         try {
             pauseButton.click();
-        } catch (UiObjectNotFoundException pauseButtonNotFound) {
-            Log.v(TAG, "Pause button not found. Trying again...");
-            pauseButtonNotFound.printStackTrace();
-            super.toggleSeekControlsVisibility();
-            pauseButton.click();
+        } catch (UiObjectNotFoundException pauseButtonNotFound1) {
+            try {
+                Log.v(TAG, "Pause button not found. Trying again...");
+                pauseButtonNotFound1.printStackTrace();
+                super.toggleSeekControlsVisibility();
+                pauseButton.click();
+            } catch (UiObjectNotFoundException pauseButtonNotFound2) {
+                pauseButtonNotFound2.printStackTrace();
+                fail("Pause Unsuccessful.");
+            }
         }
     }
 
     /**
      * lifeCycleInitialCheck documents playback location, then exits the app, and reopens
-     * it. It heavily uses the UiAutomator API. The playback location is documented by
+     * it, and documents . It heavily uses the UiAutomator API. The playback location is documented by
      * taking hold of the UiObject, and converting its text into a string. It is the first
      * step of the testing process.
      */
-    private void lifeCycleInitialCheck() throws Exception {
+    private void lifeCycleTime() throws Exception {
         Log.v(TAG, "Beginning Life Cycle Check.");
         // First, to make note of the playhead position, we reveal seek controls and examine the text view that has the time elapsed. 
         super.toggleSeekControlsVisibility();
-        UiObject adTimeBeforeLifeCycle = new UiObject(new UiSelector().resourceId("android:id/time_current"));
         // Because of the slight inconsistency of the Sample App, we set up try-catch blocks that will be prepared for an exception.
-        try {
-            adTimeStringBeforeLifeCycle = adTimeBeforeLifeCycle.getText();
-        } catch (UiObjectNotFoundException uiPlayheadPositionMissing) {
-            Log.v(TAG, "Initial Ad Time not found. Trying again.");
-            // This is often as a result of the seek controls (and consequently the playhead location) being hidden, so we will show them and retry.
-            super.toggleSeekControlsVisibility();
-            adTimeStringBeforeLifeCycle = adTimeBeforeLifeCycle.getText();            
-        }
+        currentTimeStringBeforeLifeCycle = getCurrentTimeFromUiObject();
         // Then we leave the app, beginning the check, and return to the app.
         getUiDevice().pressHome();
         Log.v(TAG, "Pressing the home button.");
         getUiDevice().pressRecentApps();
         Log.v(TAG, "Pressing the recent apps button.");
         UiObject basicOnceUxSampleAppRecentActivity = new UiObject(new UiSelector().description("Basic ONCE UX Sample App"));
-        basicOnceUxSampleAppRecentActivity.clickAndWaitForNewWindow();
         Log.v(TAG, "Reopening the Basic ONCE UX Sample App.");
+        basicOnceUxSampleAppRecentActivity.clickAndWaitForNewWindow();
+        Log.v(TAG, "Getting text from UiObject");
+        TimeUnit.MILLISECONDS.sleep(500);
+        super.toggleSeekControlsVisibility();
+        currentTimeStringAfterLifeCycle = getCurrentTimeFromUiObject();
+
     }
 
     /**
-     * lifeCycleFollowUpCheck is the second half of the lifeCycleCheck process. It simply
-     * searches for the text object that contains the current time of the video, and puts
-     * that text into a string.
+     * Gets the text 
      */
-    private void lifeCycleFollowUpCheck() throws Exception {
-        // Now we document our location now that we have returned to the app and enter the text into a string.
-        Log.v(TAG, "Beginning the Follow Up check.");
-        UiObject adTimeAfterLifeCycle = new UiObject(new UiSelector().resourceId("android:id/time_current"));
-        Log.v(TAG, "Getting text from UiObject");
-        // Because of the slight inconsistency of the Sample App, we set up try-catch blocks that will be prepared for an exception.
+    private String getCurrentTimeFromUiObject() throws UiObjectNotFoundException {
+        UiObject currentTimeView = new UiObject(new UiSelector().resourceId("android:id/time_current"));
         try {
-            adTimeStringAfterLifeCycle = adTimeAfterLifeCycle.getText();
+            return currentTimeView.getText();
         } catch (UiObjectNotFoundException uiPlayheadPositionMissing) {
-            Log.v(TAG, "Follow up Ad Time not found. Trying again.");
+            Log.v(TAG, "Current time not found. Trying again.");
             // This is often as a result of the seek controls (and consequently the playhead location) being hidden, so we will show them and retry.
             super.toggleSeekControlsVisibility();
-            adTimeStringAfterLifeCycle = adTimeAfterLifeCycle.getText();
-        }
+            return currentTimeView.getText();
+        }        
     }
 
     /**
      * The actual comparison of the test is done in stringComparison. The two strings are
      * both divided into two pairs of integers, then each pair is compared to the other
-     * pair. If both pairs are identical, stringComparison returns true. Otherwise, it will
-     * return false.
+     * pair. It is asserted that both pairs of strings are identical.
      */
-    private boolean stringComparison() {
+    private void stringComparison() {
         // The strings are both set to XX:XX, and they must be converted into a suitable format.
         // First, we specify a divider string, which will be used as a means of dividing the two pairs of numbers.
         String divider = ":";
-        String[] fragment1 = adTimeStringBeforeLifeCycle.split(divider);
-        String[] fragment2 = adTimeStringAfterLifeCycle.split(divider);
+        String[] fragment1 = currentTimeStringBeforeLifeCycle.split(divider);
+        String[] fragment2 = currentTimeStringAfterLifeCycle.split(divider);
         // Now we parse all the integers out of each string, and assign them new int names.
         int minutes1 = Integer.parseInt(fragment1[0]);
         int seconds1 = Integer.parseInt(fragment1[1]);
         int minutes2 = Integer.parseInt(fragment2[0]);
         int seconds2 = Integer.parseInt(fragment2[1]);
-        // and we log them, in the event that things go wrong.
+        // and we document them, in the event that things go wrong.
         Log.v(TAG, "Before LifeCycle Time: " + minutes1 + divider + seconds1);
         Log.v(TAG, "After LifeCycle Time: " + minutes2 + divider + seconds2);
         // Then, the actual comparison takes place and the boolean returns are specified.
- 	if(minutes1 == minutes2 && seconds1 == seconds2) {
-            Log.v(TAG, "stringComparison = true. Strings identical.");
-            return true;
-        } else {
-            Log.v(TAG, "stringComparison = false. Strings not identical.");
-            return false;
-        }
+        assertTrue("Strings not identical. Minutes are different.", minutes1 == minutes2);
+        assertTrue("Strings not identical. Seconds are different.", seconds1 == seconds2);
     }
+
 }
