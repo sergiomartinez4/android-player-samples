@@ -148,27 +148,33 @@ public abstract class OnceUxUiAutomatorBase extends UiAutomatorTestCase {
      * breaking the sample app before function has begun. A universal method helps in this case,
      * and in order to keep the setUp method universal across all test cases, play was kept separate.
      */
-    protected void playVideo() {
-        // First, wait for the Sample App to entirely process the video and we tap the screen to reveal the seek controls and press play.
+    protected void playVideo() throws Exception {
         UiObject playButton = new UiObject(new UiSelector().resourceId("android:id/pause"));
-        playButton.waitForExists(2000);
-        Log.v(TAG, "First instance of seek controls has occurred.");
+        // Dismiss the first iteration of the Seek Controls
+        playButton.waitForExists(5000);
         toggleSeekControlsVisibility();
-        Log.v(TAG, "Seek controls hidden.");
-        playButton.waitForExists(10000);
-        Log.v(TAG, "Pressing Play...");
-        try {
-            playButton.click();
-        } catch (UiObjectNotFoundException playNotFound1) {
+        // Wait for them to return, then press play.
+        if (playButton.waitForExists(5000)) {
+            Log.v(TAG, "Pressing Play...");
+            TimeUnit.SECONDS.sleep(2);
             try {
-                playNotFound1.printStackTrace();
-                Log.v(TAG, "Play button not found. Trying again.");
-                toggleSeekControlsVisibility();
                 playButton.click();
-            } catch (UiObjectNotFoundException playNotFound2) {
-                playNotFound2.printStackTrace();
-                Log.v(TAG, "Play button not found.");
-                fail("Play Unsuccessful.");
+            } catch (UiObjectNotFoundException playButtonNotFound1) {
+                Log.v(TAG, "Play button not found. Trying again.");
+                playButtonNotFound1.printStackTrace();
+                toggleSeekControlsVisibility();
+                TimeUnit.MILLISECONDS.sleep(500);
+                playButton.click();
+            }
+        } else {
+            Log.v(TAG, "Play button not found. Trying Seek Control inversion.");
+            toggleSeekControlsVisibility();
+            TimeUnit.MILLISECONDS.sleep(500);
+            try {
+                playButton.click();
+            } catch (UiObjectNotFoundException playButtonNotFound2) {
+                playButtonNotFound2.printStackTrace();
+                fail("Play button not found.");
             }
         }
     }
