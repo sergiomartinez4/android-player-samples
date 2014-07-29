@@ -36,16 +36,15 @@ public class Replay extends OnceUxUiAutomatorBase {
         Log.v(TAG, "Beginning testReplay");
         setUpReplay();
         TimeUnit.SECONDS.sleep(5);
-        UiObject currentTimeUiObject = new UiObject(new UiSelector().resourceId("android:id/time_current"));
         String currentTimeString;
         try {
             toggleSeekControlsVisibility();
             Log.v(TAG, "Getting current time.");
-            currentTimeString = currentTimeUiObject.getText();
+            currentTimeString = currentTimeView.getText();
         } catch (UiObjectNotFoundException currentTimeNotFound) {
             Log.v(TAG, "Current time not found. Retrying...");
             toggleSeekControlsVisibility();
-            currentTimeString = currentTimeUiObject.getText();
+            currentTimeString = currentTimeView.getText();
             Log.v(TAG, "Current time is " + currentTimeString);
         }
         assertTrue("Incorrect time elapsed.", currentTimeString.equals("00:05"));
@@ -64,13 +63,7 @@ public class Replay extends OnceUxUiAutomatorBase {
         setUpReplay();
 
         TimeUnit.SECONDS.sleep(5);
-        UiObject adMarkerText = new UiObject(new UiSelector().textStartsWith("Your video will resume in "));
-        if(adMarkerText.exists()) {
-            Log.v(TAG, "Ad Marker Text exists.");
-        } else {
-            Log.v(TAG, "Ad Marker Text not visible.");
-        }
-        assertTrue("Failure: Ad Break Not Found.", (adMarkerText.waitForExists(30000)));
+        assertTrue("Failure: Ad Break Not Found.", (adOverlayTextView.waitForExists(30000)));
         Log.v(TAG, "Finished testReplayCheckAdBreaks");
     }
 
@@ -92,7 +85,6 @@ public class Replay extends OnceUxUiAutomatorBase {
      */
     private void skipAhead(int secondsValue) throws UiObjectNotFoundException {
         Log.v(TAG, "Fast forwarding " + secondsValue + " seconds.");
-        UiObject ffwdButton = new UiObject(new UiSelector().resourceId("android:id/ffwd"));
         int ffwdSecondsValue = 15;
         // Cast to a double for the floating point divison, then recast to an int to round it 
         // down to a whole number and so the for parameter is comparing two numbers of the same type.

@@ -33,7 +33,6 @@ public class TestPlayStartMess extends OnceUxUiAutomatorBase {
     public void testPlayStartMessFFWDCheck() throws Exception {
         Log.v(TAG, "Beginning testPlayStartMessFFWDCheck");
         playVideoSpecialized();
-        UiObject ffwdButton = new UiObject(new UiSelector().resourceId("android:id/ffwd"));
         assertFalse("Failure: Fast Forward button found.", ffwdButton.waitForExists(10000));
     }
 
@@ -45,7 +44,6 @@ public class TestPlayStartMess extends OnceUxUiAutomatorBase {
     public void testPlayStartMessREWCheck() throws Exception {
         Log.v(TAG, "Beginning testPlayStartMessREWCheck");
         playVideoSpecialized();
-        UiObject rewButton = new UiObject(new UiSelector().resourceId("android:id/rew"));
         assertFalse("Failure: Rewind button found.", rewButton.waitForExists(10000));
     }
 
@@ -66,15 +64,14 @@ public class TestPlayStartMess extends OnceUxUiAutomatorBase {
      * preserved here for testing.
      */
     private void playVideoSpecialized() throws Exception {
-        UiObject playButton = new UiObject(new UiSelector().resourceId("android:id/pause"));
-        playButton.waitForExists(6000);
+        playPauseButton.waitForExists(6000);
         Log.v(TAG, "Pressing Play...");
         try {
-            playButton.click();
+            playPauseButton.click();
         } catch (UiObjectNotFoundException playButtonMissing) {
             Log.v(TAG, "Play button not found. Trying again.");
             toggleSeekControlsVisibility();
-            playButton.click();
+            playPauseButton.click();
         }
     }
 

@@ -121,8 +121,7 @@ public class LearnMoreTestCase extends OnceUxUiAutomatorBase {
      * waits for the object to disappear, signaling the end of the ad break.
      */
     private void adBreakHandler() throws Exception {
-        UiObject adMarkerText = new UiObject(new UiSelector().textStartsWith("Your video will resume in"));
-        if (adMarkerText.exists() && adMarkerText.isEnabled()) {
+        if (adOverlayTextView.exists() && adOverlayTextView.isEnabled()) {
             Log.v(TAG, "Ad Break started.");
             assertTrue("Conditions did not match.", learnMoreChecker());
         }

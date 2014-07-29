@@ -35,6 +35,41 @@ public abstract class OnceUxUiAutomatorBase extends UiAutomatorTestCase {
     private final String TAG = this.getClass().getSimpleName();
 
     /**
+     * The UiObject that represents both the play and pause button. It is defined separately to allow for expedited
+     * pausing and playing, without having to worry about the waiting that occurs in the playVideo() method.
+     */
+    protected final UiObject playPauseButton = new UiObject(new UiSelector().resourceId("android:id/pause"));
+
+    /**
+     * The UiObject that represents the text that is present at every Ad Break. It reads "Your video will
+     * resume in" followed by how many seconds are left in the ad break.
+     */
+    protected final UiObject adOverlayTextView = new UiObject(new UiSelector().textStartsWith("Your video will resume in"));
+
+    /**
+     * The UiObject that contains the current time of the current segment of the video.
+     */
+    protected final UiObject currentTimeView = new UiObject(new UiSelector().resourceId("android:id/time_current"));
+
+    /**
+     * The UiObject that contains the total time of the current segment of the video.
+     */
+    protected final UiObject totalTimeView = new UiObject(new UiSelector().resourceId("android:id/time"));
+
+    /**
+     * The UiObject that represents the rewind button.
+     */
+    protected final UiObject rewButton = new UiObject(new UiSelector().resourceId("android:id/rew"));
+
+    /**
+     * The UiObject that represents the fast forward button.
+     */
+    protected final UiObject ffwdButton = new UiObject(new UiSelector().resourceId("android:id/ffwd"));
+
+
+
+    // Class Variables for the Setup
+    /**
      * The UiObject that represents the apps button.
      */
     protected UiObject allAppsButton;
@@ -169,29 +204,29 @@ public abstract class OnceUxUiAutomatorBase extends UiAutomatorTestCase {
      * and in order to keep the setUp method universal across all test cases, play was kept separate.
      */
     protected void playVideo() throws UiObjectNotFoundException, InterruptedException {
-        UiObject playButton = new UiObject(new UiSelector().resourceId("android:id/pause"));
+
         // Dismiss the first iteration of the Seek Controls
-        playButton.waitForExists(5000);
+        playPauseButton.waitForExists(5000);
         toggleSeekControlsVisibility();
         // Wait for them to return, then press play.
-        if (playButton.waitForExists(5000)) {
+        if (playPauseButton.waitForExists(5000)) {
             Log.v(TAG, "Pressing Play...");
             TimeUnit.SECONDS.sleep(2);
             try {
-                playButton.click();
+                playPauseButton.click();
             } catch (UiObjectNotFoundException playButtonNotFound1) {
                 Log.v(TAG, "Play button not found. Trying again.");
                 playButtonNotFound1.printStackTrace();
                 toggleSeekControlsVisibility();
                 TimeUnit.MILLISECONDS.sleep(500);
-                playButton.click();
+                playPauseButton.click();
             }
         } else {
             Log.v(TAG, "Play button not found. Trying Seek Control inversion.");
             toggleSeekControlsVisibility();
             TimeUnit.MILLISECONDS.sleep(500);
             try {
-                playButton.click();
+                playPauseButton.click();
             } catch (UiObjectNotFoundException playButtonNotFound2) {
                 playButtonNotFound2.printStackTrace();
                 fail("Play button not found.");

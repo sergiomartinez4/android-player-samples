@@ -28,11 +28,6 @@ public class BasicCompanionAdTest extends OnceUxUiAutomatorBase {
      */
     private UiObject companionAd;
 
-    /**
-     * The UiObject that represents the text that is present at every Ad Break. It reads "Your video will
-     * resume in" followed by how many seconds are left in the ad break.
-     */
-    private UiObject adText = new UiObject(new UiSelector().textStartsWith("Your video will resume in"));
 
     // Test Methods
     /**
@@ -41,7 +36,7 @@ public class BasicCompanionAdTest extends OnceUxUiAutomatorBase {
     public void testCompanionAd() throws Exception {
         Log.v(TAG, "Beginning testCompanionAd");
         playVideo();
-        assertTrue("Ad Break did not begin within given time.", adText.waitForExists(5000));
+        assertTrue("Ad Break did not begin within given time.", adOverlayTextView.waitForExists(5000));
         assertTrue("Companion ad not found.", companionCheck());
         Log.v(TAG, "Finished testCompanionAd");
     }
@@ -56,7 +51,7 @@ public class BasicCompanionAdTest extends OnceUxUiAutomatorBase {
     public void testCompanionAdLink() throws Exception {
         Log.v(TAG, "Beginning testCompanionAdLink");
         playVideo();
-        assertTrue("Ad Break did not begin within given time.", adText.waitForExists(5000));
+        assertTrue("Ad Break did not begin within given time.", adOverlayTextView.waitForExists(5000));
         UiObject companionAdUrl = new UiObject(new UiSelector().textContains("starbucks.com"));
         if (companionCheck()) {
             companionAd.clickAndWaitForNewWindow();
@@ -69,8 +64,8 @@ public class BasicCompanionAdTest extends OnceUxUiAutomatorBase {
 
     /**
      * testCompanionAdVanishPrerolls checks if the companion ad accompanying the ad breaks vanish in time.
-     * This is done by waiting for the adText UiObject to be present, then performs companionCheck. After 
-     * the utility methods are done, it is asserted that the Companion Ad will vanish within the next 5 
+     * This is done by waiting for the adOverlayTextView UiObject to be present, then performs companionCheck.
+     * After the utility methods are done, it is asserted that the Companion Ad will vanish within the next 5 
      * seconds. Much of the time a false positive arrives as the seek controls appear when the content 
      * block begins, and can hide the companion ad from UiAutomator, so next the seek controls are hidden
      * and it is asserted that the companion ad is gone. Then, the test waits for the next ad break to begin.
@@ -80,7 +75,7 @@ public class BasicCompanionAdTest extends OnceUxUiAutomatorBase {
         playVideo();
 
         // The following tests that the companion ad vanishes after prerolls.
-        assertTrue("Ad Break did not begin within given time.", adText.waitForExists(5000));
+        assertTrue("Ad Break did not begin within given time.", adOverlayTextView.waitForExists(5000));
         Log.v(TAG, "Prerolls...");
         companionCheck();
         TimeUnit.SECONDS.sleep(5);
@@ -89,7 +84,7 @@ public class BasicCompanionAdTest extends OnceUxUiAutomatorBase {
         assertFalse("Companion ad still present after prerolls.", companionAd.exists());
 
         // Next, the companion ad that accompanies the Midroll ad break is tested.
-        assertTrue("Ad Break did not begin within given time.", adText.waitForExists(35000));
+        assertTrue("Ad Break did not begin within given time.", adOverlayTextView.waitForExists(35000));
         Log.v(TAG, "Midrolls...");
         companionCheck();
         TimeUnit.SECONDS.sleep(5);
@@ -98,7 +93,7 @@ public class BasicCompanionAdTest extends OnceUxUiAutomatorBase {
         assertFalse("Companion ad still present after midrolls.", companionAd.exists());
 
         // Next, the companion ad that accompanies the Postroll ad break is tested.
-        assertTrue("Ad Break did not begin within given time.", adText.waitForExists(112000));
+        assertTrue("Ad Break did not begin within given time.", adOverlayTextView.waitForExists(112000));
         Log.v(TAG, "Postrolls...");
         companionCheck();
         TimeUnit.SECONDS.sleep(5);

@@ -44,8 +44,7 @@ public class VideoFrameTestCase extends OnceUxUiAutomatorBase {
         Log.v(TAG, "Beginning testPlayStartMessViewBounds");
         // The play button is being used to check when seek controls first appear,
         // which is when the video gets its first size and location.
-        UiObject playButton = new UiObject(new UiSelector().resourceId("android:id/pause"));
-        playButton.waitForExists(3000);
+        playPauseButton.waitForExists(3000);
         toggleSeekControlsVisibility();
 
         UiObject brightcoveVideoView = new UiObject(new UiSelector().resourceId("com.brightcove.player.samples.onceux.basic:id/brightcove_video_view"));

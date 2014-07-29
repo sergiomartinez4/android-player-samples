@@ -32,16 +32,6 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
      */
     private String currentTimeStringAfterBackground;
 
-    /**
-     * The UiObject that contains the current time of the current segment of the video.
-     */
-    private UiObject currentTimeView = new UiObject(new UiSelector().resourceId("android:id/time_current"));
-
-    /**
-     * The UiObject that contains the total time of the current segment of the video.
-     */
-    private UiObject totalTimeView = new UiObject(new UiSelector().resourceId("android:id/time"));
-
 
     // Test Methods
 

@@ -18,26 +18,6 @@ public class SeekControlsTestCase extends OnceUxUiAutomatorBase {
     private final String TAG = this.getClass().getSimpleName();
 
     /**
-     * The UiObject that represents the rewind button.
-     */
-    UiObject rewButton = new UiObject(new UiSelector().resourceId("android:id/rew"));
-    /**
-     * The UiObject that represents the fast forward button.
-     */
-    UiObject ffwdButton = new UiObject(new UiSelector().resourceId("android:id/ffwd"));
-    /**
-     * The UiObject that represents the total time text view.
-     */
-    UiObject timeTextView = new UiObject(new UiSelector().resourceId("android:id/time"));
-    /**
-     * The UiObject that represents the current time text view.
-     */
-    UiObject currentTimeTextView = new UiObject(new UiSelector().resourceId("android:id/time_current"));
-    /**
-     * The UiObject that represents the play and pause button.
-     */
-    UiObject playPauseButton = new UiObject(new UiSelector().resourceId("android:id/pause"));
-    /**
      * The String that defines the total content length, in the form that it is presented in the UI.
      */
     String totalContentTime = "01:45";
@@ -60,14 +40,14 @@ public class SeekControlsTestCase extends OnceUxUiAutomatorBase {
         ffwdButton.click();
         TimeUnit.SECONDS.sleep(5);
         toggleSeekControlsVisibility();
-        String timeString1 = timeTextView.getText();
+        String timeString1 = totalTimeView.getText();
         assertTrue("Fast Forward caused timeline to break. Total Time: " + timeString1, timeString1.equals(totalContentTime));
 
         // Test Rewind functionality
         rewButton.click();
         TimeUnit.SECONDS.sleep(5);
         toggleSeekControlsVisibility();
-        String timeString2 = timeTextView.getText();
+        String timeString2 = totalTimeView.getText();
         assertTrue("Rewind caused timeline to break. Total Time: " + timeString2, timeString2.equals(totalContentTime));
     }
 
@@ -87,14 +67,14 @@ public class SeekControlsTestCase extends OnceUxUiAutomatorBase {
         TimeUnit.SECONDS.sleep(5);
         toggleSeekControlsVisibility();
         ffwdButton.click();
-        String currentTimeString1 = currentTimeTextView.getText();
+        String currentTimeString1 = currentTimeView.getText();
         TimeUnit.SECONDS.sleep(5);
 
         // Rewind twice, then capture the current time. Then make the comparison.
         toggleSeekControlsVisibility();
         rewButton.click();
         rewButton.click();
-        String currentTimeString2 = currentTimeTextView.getText();
+        String currentTimeString2 = currentTimeView.getText();
         stringComparison(currentTimeString1, currentTimeString2);
     }
 

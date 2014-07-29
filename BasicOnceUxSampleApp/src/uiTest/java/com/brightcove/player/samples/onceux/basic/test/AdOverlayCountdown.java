@@ -21,13 +21,6 @@ public class AdOverlayCountdown extends OnceUxUiAutomatorBase {
      */
     private final String TAG = this.getClass().getSimpleName();
 
-    /**
-     * The UiObject that represents both the play and pause button. It is called in this 
-     * method to allow expedited pausing and playing, without having to worry about the 
-     * waiting that occurs in the super.playVideo() method.
-     */
-    private UiObject playPauseButton = new UiObject(new UiSelector().resourceId("android:id/pause"));
-
 
     // Test Methods
     /**
