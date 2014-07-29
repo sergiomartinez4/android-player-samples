@@ -145,12 +145,11 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
      */
     private void pauseVideo() throws InterruptedException {
         // First, we bring up the play/seek control menu, then press pause.
-        UiObject pauseButton = new UiObject(new UiSelector().resourceId("android:id/pause"));
         toggleSeekControlsVisibility();
         TimeUnit.MILLISECONDS.sleep(500);
         Log.v(TAG, "Pressing Pause...");
         try {
-            pauseButton.click();
+            playPauseButton.click();
             // If pause isn't found, reveal seek controls and try again.
         } catch (UiObjectNotFoundException pauseButtonNotFound1) {
             try {
@@ -158,7 +157,7 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
                 pauseButtonNotFound1.printStackTrace();
                 toggleSeekControlsVisibility();
                 TimeUnit.MILLISECONDS.sleep(500);
-                pauseButton.click();
+                playPauseButton.click();
                 // If pause still isn't found, bigger problems are occurring than what these tests should handle.
             } catch (UiObjectNotFoundException pauseButtonNotFound2) {
                 pauseButtonNotFound2.printStackTrace();
