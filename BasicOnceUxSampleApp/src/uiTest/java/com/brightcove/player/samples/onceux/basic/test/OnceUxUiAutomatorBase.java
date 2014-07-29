@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.concurrent.TimeUnit;
 
+import android.os.RemoteException;
 import com.android.uiautomator.core.UiObject;
 import com.android.uiautomator.core.UiObjectNotFoundException;
 import com.android.uiautomator.core.UiScrollable;
@@ -34,9 +35,29 @@ public abstract class OnceUxUiAutomatorBase extends UiAutomatorTestCase {
     private final String TAG = this.getClass().getSimpleName();
 
     /**
+     * The UiObject that represents the apps button.
+     */
+    protected UiObject allAppsButton;
+    /**
      * The UiObject that represents the Basic ONCE UX Sample App.
      */
     protected UiObject basicOnceUxSampleApp;
+    /**
+     * The UiObject that represents the Settings app.
+     */
+    protected UiObject settingsApp;
+    /**
+     * The UiObject that represents the Basic Once UX Sample App within the Apps section of the Settings app.
+     */
+    protected UiObject basicOnceUxSampleAppSettings;
+    /**
+     * The UiObject that represents the Basic Once UX Sample App in the recent apps screen.
+     */
+    protected UiObject basicOnceUxSampleAppRecentActivity;
+    /**
+     * The UiObject that represents the force stop buton within settings.
+     */
+    protected UiObject forceStopButton;
 
     // Universal setUp and tearDown methods.
 
@@ -46,12 +67,12 @@ public abstract class OnceUxUiAutomatorBase extends UiAutomatorTestCase {
      * OnceUx Sample App. It opens the application with the name that matches "Basic ONCE 
      * UX Sample App."
      */
-    protected void setUp() throws Exception {   
+    protected void setUp() throws UiObjectNotFoundException {   
         // Simulate a short press on the HOME button and navigate to apps screen.
         getUiDevice().pressHome();
         Log.v(TAG, "Pressing the home button.");
 
-        UiObject allAppsButton = new UiObject(new UiSelector().description("Apps"));
+        allAppsButton = new UiObject(new UiSelector().description("Apps"));
         allAppsButton.clickAndWaitForNewWindow();
         Log.v(TAG, "Pressing the All Apps button.");
         
@@ -65,10 +86,9 @@ public abstract class OnceUxUiAutomatorBase extends UiAutomatorTestCase {
 
         // If it exists, we want to press on the app's icon, launching it.
         basicOnceUxSampleApp = appViews.getChildByText(new UiSelector().className(android.widget.TextView.class.getName()), "Basic ONCE UX Sample App");
-        if(basicOnceUxSampleApp != null) {
-            basicOnceUxSampleApp.clickAndWaitForNewWindow();
-            Log.v(TAG, "Pressing the Basic Once Ux Sample App.");
-        }
+        Log.v(TAG, "Pressing the Basic Once Ux Sample App.");
+        basicOnceUxSampleApp.clickAndWaitForNewWindow();
+    
     }
     
     /**
@@ -79,13 +99,13 @@ public abstract class OnceUxUiAutomatorBase extends UiAutomatorTestCase {
      * from the device's cached memory. This allows us to have a totally clean 
      * environment when beginning a new test.
      */
-    @Override protected void tearDown() throws Exception {
+    protected void tearDown() throws UiObjectNotFoundException, InterruptedException, RemoteException {
         // We now want to leave the app and close it entirely. The first step is to go to the all apps menu and navigate through it.
         getUiDevice().pressHome();
         Log.v(TAG, "Pressing the Home button.");
 
         TimeUnit.SECONDS.sleep(1);
-        UiObject allAppsButton = new UiObject(new UiSelector().description("Apps"));
+        allAppsButton = new UiObject(new UiSelector().description("Apps"));
         allAppsButton.clickAndWaitForNewWindow();
         Log.v(TAG, "Pressing the All Apps button.");
 
@@ -98,7 +118,7 @@ public abstract class OnceUxUiAutomatorBase extends UiAutomatorTestCase {
         appViews.setAsHorizontalList();
 
         // Next, we open the settings app, and open the particular section that specifies settings for Apps.
-        UiObject settingsApp  = appViews.getChildByText(new UiSelector().className(android.widget.TextView.class.getName()), "Settings");
+        settingsApp = appViews.getChildByText(new UiSelector().className(android.widget.TextView.class.getName()), "Settings");
         settingsApp.click();
         Log.v(TAG, "Pressing the Settings app.");
 
@@ -107,12 +127,12 @@ public abstract class OnceUxUiAutomatorBase extends UiAutomatorTestCase {
         Log.v(TAG, "Pressing the Apps tab in the Settings App.");
 
         // Next, we must choose the "Basic ONCE UX Sample App".
-        UiObject basicOnceUxSampleAppSettings = new UiObject (new UiSelector().text("Basic ONCE UX Sample App"));
+        basicOnceUxSampleAppSettings = new UiObject (new UiSelector().text("Basic ONCE UX Sample App"));
         basicOnceUxSampleAppSettings.click();
         Log.v(TAG, "Pressing the Basic ONCE UX Sample App in the Apps Settings field.");
 
         // And we Force stop the sample app, pressing OK when the clarification prompt appears, and leave settings.
-        UiObject forceStopButton = new UiObject(new UiSelector().text("Force stop"));
+        forceStopButton = new UiObject(new UiSelector().text("Force stop"));
         forceStopButton.clickAndWaitForNewWindow();
 
         UiObject okButton = new UiObject(new UiSelector().text("OK").className(android.widget.Button.class));
@@ -132,7 +152,7 @@ public abstract class OnceUxUiAutomatorBase extends UiAutomatorTestCase {
         Log.v(TAG, "Pressing the Recent Apps button.");
 
         // Then we register the UiObject and swipe it down in order to remove it from the recent activity screen, and return to home.
-        UiObject basicOnceUxSampleAppRecentActivity = new UiObject(new UiSelector().description("Basic ONCE UX Sample App"));
+        basicOnceUxSampleAppRecentActivity = new UiObject(new UiSelector().description("Basic ONCE UX Sample App"));
         basicOnceUxSampleAppRecentActivity.swipeDown(20);
         Log.v(TAG, "Swiping away the Basic Once Ux Sample App activity Ui Object.");
 
@@ -148,7 +168,7 @@ public abstract class OnceUxUiAutomatorBase extends UiAutomatorTestCase {
      * breaking the sample app before function has begun. A universal method helps in this case,
      * and in order to keep the setUp method universal across all test cases, play was kept separate.
      */
-    protected void playVideo() throws Exception {
+    protected void playVideo() throws UiObjectNotFoundException, InterruptedException {
         UiObject playButton = new UiObject(new UiSelector().resourceId("android:id/pause"));
         // Dismiss the first iteration of the Seek Controls
         playButton.waitForExists(5000);

@@ -30,7 +30,7 @@ public class LearnMoreTestCase extends OnceUxUiAutomatorBase {
     /**
      * The setUp runs the super.setUp(), then defines shouldHaveLearnMore as false by default.
      */
-    protected void setUp() throws Exception {
+    @Override protected void setUp() throws UiObjectNotFoundException {
         super.setUp();
         shouldHaveLearnMore = false;
     }
