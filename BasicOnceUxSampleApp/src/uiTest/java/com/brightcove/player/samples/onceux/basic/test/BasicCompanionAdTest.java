@@ -40,7 +40,7 @@ public class BasicCompanionAdTest extends OnceUxUiAutomatorBase {
      */
     public void testCompanionAd() throws Exception {
         Log.v(TAG, "Beginning testCompanionAd");
-        super.playVideo();
+        playVideo();
         assertTrue("Ad Break did not begin within given time.", adText.waitForExists(5000));
         assertTrue("Companion ad not found.", companionCheck());
         Log.v(TAG, "Finished testCompanionAd");
@@ -55,7 +55,7 @@ public class BasicCompanionAdTest extends OnceUxUiAutomatorBase {
      */
     public void testCompanionAdLink() throws Exception {
         Log.v(TAG, "Beginning testCompanionAdLink");
-        super.playVideo();
+        playVideo();
         assertTrue("Ad Break did not begin within given time.", adText.waitForExists(5000));
         UiObject companionAdUrl = new UiObject(new UiSelector().textContains("starbucks.com"));
         if (companionCheck()) {
@@ -77,7 +77,7 @@ public class BasicCompanionAdTest extends OnceUxUiAutomatorBase {
      */
     public void testCompanionAdVanish() throws Exception {
         Log.v(TAG, "Beginning testCompanionAdVanish");
-        super.playVideo();
+        playVideo();
 
         // The following tests that the companion ad vanishes after prerolls.
         assertTrue("Ad Break did not begin within given time.", adText.waitForExists(5000));
@@ -85,7 +85,7 @@ public class BasicCompanionAdTest extends OnceUxUiAutomatorBase {
         companionCheck();
         TimeUnit.SECONDS.sleep(5);
         assertTrue("Ad Break did not finish within given time.", companionAd.waitUntilGone(30000));
-        super.toggleSeekControlsVisibility();
+        toggleSeekControlsVisibility();
         assertFalse("Companion ad still present after prerolls.", companionAd.exists());
 
         // Next, the companion ad that accompanies the Midroll ad break is tested.
@@ -94,7 +94,7 @@ public class BasicCompanionAdTest extends OnceUxUiAutomatorBase {
         companionCheck();
         TimeUnit.SECONDS.sleep(5);
         assertTrue("Ad Break did not finish within given time.", companionAd.waitUntilGone(30000));
-        super.toggleSeekControlsVisibility();
+        toggleSeekControlsVisibility();
         assertFalse("Companion ad still present after midrolls.", companionAd.exists());
 
         // Next, the companion ad that accompanies the Postroll ad break is tested.
@@ -103,7 +103,7 @@ public class BasicCompanionAdTest extends OnceUxUiAutomatorBase {
         companionCheck();
         TimeUnit.SECONDS.sleep(5);
         assertTrue("Ad Break did not finish within given time.", companionAd.waitUntilGone(30000));
-        super.toggleSeekControlsVisibility();
+        toggleSeekControlsVisibility();
         assertFalse("Companion ad still present after postrolls.", companionAd.exists());
         Log.v(TAG, "Finished testCompanionAdVanish");
     }

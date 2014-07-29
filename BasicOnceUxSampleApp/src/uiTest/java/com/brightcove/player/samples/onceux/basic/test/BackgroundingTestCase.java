@@ -56,9 +56,9 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
      */
     public void testBackgroundAdBreakPlaying() throws Exception {
         Log.v(TAG, "Beginning testBackgroundAdBreakPlaying");
-        super.playVideo();
+        playVideo();
         TimeUnit.SECONDS.sleep(5);
-        super.toggleSeekControlsVisibility();
+        toggleSeekControlsVisibility();
         getBackgroundTimes();
         stringComparison();
         Log.v(TAG, "Finished testBackgroundAdBreakPlaying");
@@ -70,7 +70,7 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
      */
     public void testBackgroundAdBreakPaused() throws Exception {
         Log.v(TAG, "Beginning testBackgroundAdBreakPaused");
-        super.playVideo();
+        playVideo();
         TimeUnit.SECONDS.sleep(5);
         pauseVideo();
         getBackgroundTimes();
@@ -83,9 +83,9 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
      */
     public void testBackgroundAdBreakSeekControls() throws Exception {
         Log.v(TAG, "Beginning testBackgroundAdBreakSeekControls");
-        super.playVideo();
+        playVideo();
         TimeUnit.SECONDS.sleep(5);
-        super.toggleSeekControlsVisibility();
+        toggleSeekControlsVisibility();
         getBackgroundTimes();
         TimeUnit.SECONDS.sleep(1);
         UiObject seekBar = new UiObject(new UiSelector().resourceId("android:id/mediacontroller_progress"));
@@ -102,9 +102,9 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
      */
     public void testBackgroundContentBlockPlaying() throws Exception {
         Log.v(TAG, "Beginning testBackgroundContentBlockPlaying");
-        super.playVideo();
+        playVideo();
         TimeUnit.SECONDS.sleep(45);
-        super.toggleSeekControlsVisibility();
+        toggleSeekControlsVisibility();
         getBackgroundTimes();
         stringComparison();
         Log.v(TAG, "Finished testBackgroundContentBlockPlaying");
@@ -115,7 +115,7 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
      */
     public void testBackgroundContentBlockPaused() throws Exception {
         Log.v(TAG, "Beginning testBackgroundContentBlockPaused");
-        super.playVideo();
+        playVideo();
         TimeUnit.SECONDS.sleep(45);
         pauseVideo();
         getBackgroundTimes();
@@ -129,15 +129,15 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
     public void testBackgroundContentBlockTotalTime() throws Exception {
         Log.v(TAG, "Beginning testBackgroundContentBlockTotalTime");
         // Navigate to the content, and gather the total time information, and assert that it's correct before backgrounding.
-        super.playVideo();
+        playVideo();
         TimeUnit.SECONDS.sleep(45);
-        super.toggleSeekControlsVisibility();
+        toggleSeekControlsVisibility();
         String beforeTime = getTextFromUiObject(totalTimeView);
         assertTrue("Timeline changed, content is now " + beforeTime + ".", beforeTime.equals("01:45"));
         // Then perform getBackgroundTimes, gathering the information again, and assert that it's still correct.
         getBackgroundTimes();
         TimeUnit.SECONDS.sleep(1);
-        super.toggleSeekControlsVisibility();
+        toggleSeekControlsVisibility();
         String afterTime = getTextFromUiObject(totalTimeView);
         assertTrue("Timeline changed, content is now " + afterTime + ".", afterTime.equals("01:45"));
         Log.v(TAG, "Finished testBackgroundContentBlockTotalTime");
@@ -156,7 +156,7 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
     private void pauseVideo() throws InterruptedException {
         // First, we bring up the play/seek control menu, then press pause.
         UiObject pauseButton = new UiObject(new UiSelector().resourceId("android:id/pause"));
-        super.toggleSeekControlsVisibility();
+        toggleSeekControlsVisibility();
         TimeUnit.MILLISECONDS.sleep(500);
         Log.v(TAG, "Pressing Pause...");
         try {
@@ -166,7 +166,7 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
             try {
                 Log.v(TAG, "Pause button not found. Trying again...");
                 pauseButtonNotFound1.printStackTrace();
-                super.toggleSeekControlsVisibility();
+                toggleSeekControlsVisibility();
                 TimeUnit.MILLISECONDS.sleep(500);
                 pauseButton.click();
                 // If pause still isn't found, bigger problems are occurring than what these tests should handle.
@@ -197,7 +197,7 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
         // Get the new text
         Log.v(TAG, "Getting text from UiObject");
         TimeUnit.MILLISECONDS.sleep(500);
-        super.toggleSeekControlsVisibility();
+        toggleSeekControlsVisibility();
         currentTimeStringAfterBackground = getTextFromUiObject(currentTimeView);
 
     }
@@ -211,7 +211,7 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
         } catch (UiObjectNotFoundException uiPlayheadPositionMissing) {
             Log.v(TAG, "Text object not found. Trying again.");
             // This is often as a result of the seek controls (and consequently the playhead location) being hidden, so we will show them and retry.
-            super.toggleSeekControlsVisibility();
+            toggleSeekControlsVisibility();
             return textViewUiObject.getText();
         }        
     }

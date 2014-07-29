@@ -46,7 +46,7 @@ public class LearnMoreTestCase extends OnceUxUiAutomatorBase {
      */
     public void testLearnMoreCheckPrerolls() throws Exception {
         //Calls upon utility methods, makes assertions that prerolls should have the "Learn More" UiObject.
-        super.playVideo();
+        playVideo();
         Log.v(TAG, "Beginning testLearnMoreCheckPrerolls.");
         shouldHaveLearnMore = true;
         TimeUnit.SECONDS.sleep(10);
@@ -63,7 +63,7 @@ public class LearnMoreTestCase extends OnceUxUiAutomatorBase {
      */
     public void testLearnMoreCheckMidrolls() throws Exception {
         //Calls upon utility methods, makes assertions that midrolls should not have the "Learn More" UiObject.
-        super.playVideo();
+        playVideo();
         Log.v(TAG, "Beginning testLearnMoreCheckMidrolls");
         shouldHaveLearnMore = false;
         TimeUnit.SECONDS.sleep(70);
@@ -78,7 +78,7 @@ public class LearnMoreTestCase extends OnceUxUiAutomatorBase {
      */
     public void testLearnMoreCheckPostrolls() throws Exception {
         //Calls upon utility methods, makes assertions that prerolls should have the "Learn More" UiObject.
-        super.playVideo();
+        playVideo();
         Log.v(TAG, "Beginning testLearnMoreCheckPostrolls");
         shouldHaveLearnMore = true;
         TimeUnit.MINUTES.sleep(3);

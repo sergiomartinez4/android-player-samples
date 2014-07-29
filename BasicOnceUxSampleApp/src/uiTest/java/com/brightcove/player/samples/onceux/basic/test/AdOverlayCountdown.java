@@ -37,14 +37,14 @@ public class AdOverlayCountdown extends OnceUxUiAutomatorBase {
      */
     public void testAdOverlayCountdown() throws Exception {
         Log.v(TAG, "Beginning testAdOverlayCountdown");
-        super.playVideo();
+        playVideo();
         Log.v(TAG, "Play clicked. Pressing pause...");
         playPauseButton.click();
         Log.v(TAG, "Pause clicked. Beginning loop.");
         for (int i = 1; i < 28; i++) {
             Log.v(TAG, "Beginning loop. Loop number: " + i);
             assertTrue(timeComparison(currentTimeSeconds(), adTextTimeSeconds()));
-            super.toggleSeekControlsVisibility();
+            toggleSeekControlsVisibility();
             Log.v(TAG, "Showing Seek Controls.");
             Log.v(TAG, "Pressing play...");
             playPauseButton.click();
@@ -66,7 +66,7 @@ public class AdOverlayCountdown extends OnceUxUiAutomatorBase {
         try {
             currentTimeString = currentTime.getText();
         } catch (UiObjectNotFoundException currentTimeException) {
-            super.toggleSeekControlsVisibility();
+            toggleSeekControlsVisibility();
             currentTimeString = currentTime.getText();
         }
         String fragment = currentTimeString.replace("00:", "");
@@ -84,7 +84,7 @@ public class AdOverlayCountdown extends OnceUxUiAutomatorBase {
         try {
             adTextString = adText.getText();
         } catch (UiObjectNotFoundException adTimeException) {
-            super.toggleSeekControlsVisibility();
+            toggleSeekControlsVisibility();
             adTextString = adText.getText();
         }
         String fragment1 = adTextString.replace("Your video will resume in ", "");

@@ -62,7 +62,7 @@ public class TestPlayStartMess extends OnceUxUiAutomatorBase {
 
     /**
      * The scenario as described in the class level comment occurs based on an outdated 
-     * version of the super.playVideo method. As a result, that version needed to be 
+     * version of the playVideo method. As a result, that version needed to be 
      * preserved here for testing.
      */
     private void playVideoSpecialized() throws Exception {
@@ -73,7 +73,7 @@ public class TestPlayStartMess extends OnceUxUiAutomatorBase {
             playButton.click();
         } catch (UiObjectNotFoundException playButtonMissing) {
             Log.v(TAG, "Play button not found. Trying again.");
-            super.toggleSeekControlsVisibility();
+            toggleSeekControlsVisibility();
             playButton.click();
         }
     }

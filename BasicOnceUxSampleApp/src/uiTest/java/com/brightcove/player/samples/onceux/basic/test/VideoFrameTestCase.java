@@ -13,10 +13,10 @@ import com.android.uiautomator.testrunner.UiAutomatorTestCase;
 
 /**
  * This class provides a method that tests the video frame bounds to ensure that the video is the same
- * size/location both before and after play. This is done by waiting to play when the super.setUp() is
- * completed, gathering the information, then inducing a super.tearDown() and super.setUp(), then 
- * playing the new instance of the sample app, gathering the information on the frame boundaries, and 
- * comparing the two sets of boundaries.
+ * size/location both before and after play. This is done by waiting to play when the setUp() is
+ * completed, gathering the information, then inducing a tearDown() and setUp(), then  playing the
+ * new instance of the sample app, gathering the information on the frame boundaries, and  comparing
+ * the two sets of boundaries.
  *
  * @author Bryan Gregory Scott -- bscott@brightcove.com
  */
@@ -34,8 +34,8 @@ public class VideoFrameTestCase extends OnceUxUiAutomatorBase {
      * testViewBounds asserts that the particular view bounds of a video are identical before
      * play begins and after play has concluded. First, the test gathers the untouched frame
      * size before the video plays. It gathers the view bounds into a Rect object, then organizes
-     * it into four different ints that can be compared later. Then, the test runs super.tearDown()
-     * and super.setUp() to get a totally fresh version of the sample app, and hits play. After ten
+     * it into four different ints that can be compared later. Then, the test runs tearDown()
+     * and setUp() to get a totally fresh version of the sample app, and hits play. After ten
      * seconds, the test collects the bounds of the video frame as a new Rect object and converts
      * the rect into four different ints. Then, the four int pairs are asserted to be identical, as
      * the video's location should not change after play.
@@ -46,7 +46,7 @@ public class VideoFrameTestCase extends OnceUxUiAutomatorBase {
         // which is when the video gets its first size and location.
         UiObject playButton = new UiObject(new UiSelector().resourceId("android:id/pause"));
         playButton.waitForExists(3000);
-        super.toggleSeekControlsVisibility();
+        toggleSeekControlsVisibility();
 
         UiObject brightcoveVideoView = new UiObject(new UiSelector().resourceId("com.brightcove.player.samples.onceux.basic:id/brightcove_video_view"));
         UiObject videoView = brightcoveVideoView.getChild(new UiSelector().className(android.view.View.class));
@@ -62,12 +62,12 @@ public class VideoFrameTestCase extends OnceUxUiAutomatorBase {
         int bottom1 = Integer.parseInt(fragments1[3]);
         Log.v(TAG, "Preliminary rectangle bounds... Left bound: " + left1 + ". Top bound: " + top1 + ". Right bound: " + right1 + ". Bottom bound: " + bottom1 + ".");
 
-        super.tearDown();
-        super.setUp();
+        tearDown();
+        setUp();
 
         // To get the follow up video bounds, we simply play the video. Waiting ten seconds
         // removes the need to worry about its initialization process or seek controls interfering.
-        super.playVideo();
+        playVideo();
         TimeUnit.SECONDS.sleep(10);
 
         // This next chunk of code gathers the second set of video bounds, and convers them into four ints.

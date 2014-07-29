@@ -39,12 +39,12 @@ public class Replay extends OnceUxUiAutomatorBase {
         UiObject currentTimeUiObject = new UiObject(new UiSelector().resourceId("android:id/time_current"));
         String currentTimeString;
         try {
-            super.toggleSeekControlsVisibility();
+            toggleSeekControlsVisibility();
             Log.v(TAG, "Getting current time.");
             currentTimeString = currentTimeUiObject.getText();
         } catch (UiObjectNotFoundException currentTimeNotFound) {
             Log.v(TAG, "Current time not found. Retrying...");
-            super.toggleSeekControlsVisibility();
+            toggleSeekControlsVisibility();
             currentTimeString = currentTimeUiObject.getText();
             Log.v(TAG, "Current time is " + currentTimeString);
         }
@@ -110,7 +110,7 @@ public class Replay extends OnceUxUiAutomatorBase {
      * the skipAhead utility method to skip content blocks and waits through ad blocks.
      */
     private void setUpReplay() throws Exception {
-        super.playVideo();
+        playVideo();
         
         TimeUnit.SECONDS.sleep(31);
         skipAhead(30);
@@ -120,8 +120,8 @@ public class Replay extends OnceUxUiAutomatorBase {
 
         // Due to the nature of the sample app, the first play after it has concluded serves as an
         // alert that the video needs to reload. The second play serves to actually play.
-        super.playVideo();
-        super.playVideo();
+        playVideo();
+        playVideo();
 
     }
 
