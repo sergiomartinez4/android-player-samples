@@ -137,36 +137,6 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
     // Utility Methods
 
     /**
-     * The pauseVideo utility method provides a way to pause the sample app using the UiAutomator APIs.
-     * This is done much the same as playVideo, without the initial waiting for the video to load. It
-     * is assumed that this will only be used in conjunction with playVideo, as if otherwise used, this
-     * utility method will execute a play function. This is because pause and play functions are both
-     * mapped to a single resource id, "android:id/pause".
-     */
-    private void pauseVideo() throws InterruptedException {
-        // First, we bring up the play/seek control menu, then press pause.
-        toggleSeekControlsVisibility();
-        TimeUnit.MILLISECONDS.sleep(500);
-        Log.v(TAG, "Pressing Pause...");
-        try {
-            playPauseButton.click();
-            // If pause isn't found, reveal seek controls and try again.
-        } catch (UiObjectNotFoundException pauseButtonNotFound1) {
-            try {
-                Log.v(TAG, "Pause button not found. Trying again...");
-                pauseButtonNotFound1.printStackTrace();
-                toggleSeekControlsVisibility();
-                TimeUnit.MILLISECONDS.sleep(500);
-                playPauseButton.click();
-                // If pause still isn't found, bigger problems are occurring than what these tests should handle.
-            } catch (UiObjectNotFoundException pauseButtonNotFound2) {
-                pauseButtonNotFound2.printStackTrace();
-                fail("Pause Unsuccessful.");
-            }
-        }
-    }
-
-    /**
      * getBackgroundTimes documents the current time, then exits the app, and reopens
      * it, and documents it. The current time is documented by taking hold of the UiObject,
      * and converting its text into a string.

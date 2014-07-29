@@ -63,7 +63,7 @@ public class SeekControlsTestCase extends OnceUxUiAutomatorBase {
         Log.v(TAG, "Ad Break ended.");
 
         // Pause, Fast Forward, and capture the current time to prepare for rewinding.
-        playPauseButton.click();
+        pauseVideo();
         TimeUnit.SECONDS.sleep(5);
         toggleSeekControlsVisibility();
         ffwdButton.click();

@@ -235,6 +235,37 @@ public abstract class OnceUxUiAutomatorBase extends UiAutomatorTestCase {
     }
 
     /**
+     * The pauseVideo utility method provides a way to pause the sample app using the UiAutomator APIs.
+     * This is done much the same as playVideo, without the initial waiting for the video to load. It
+     * is assumed that this will only be used in conjunction with playVideo, as if otherwise used, this
+     * utility method will execute a play function. This is because pause and play functions are both
+     * mapped to a single resource id, "android:id/pause".
+     */
+    private void pauseVideo() throws InterruptedException {
+        // First, we bring up the play/seek control menu, then press pause.
+        toggleSeekControlsVisibility();
+        TimeUnit.MILLISECONDS.sleep(500);
+        Log.v(TAG, "Pressing Pause...");
+        try {
+            playPauseButton.click();
+            // If pause isn't found, reveal seek controls and try again.
+        } catch (UiObjectNotFoundException pauseButtonNotFound1) {
+            try {
+                Log.v(TAG, "Pause button not found. Trying again...");
+                pauseButtonNotFound1.printStackTrace();
+                toggleSeekControlsVisibility();
+                TimeUnit.MILLISECONDS.sleep(500);
+                playPauseButton.click();
+                // If pause still isn't found, bigger problems are occurring than what these tests should handle.
+            } catch (UiObjectNotFoundException pauseButtonNotFound2) {
+                pauseButtonNotFound2.printStackTrace();
+                fail("Pause Unsuccessful.");
+            }
+        }
+    }
+
+
+    /**
      * seekControls provides a method that toggles the accessibility of the seek controls menu,
      * which contains the rewind, fast forward, and pause/play buttons, as well as the seek bar
      * and the Ui Objects that contain the current time elapsed and total time.
