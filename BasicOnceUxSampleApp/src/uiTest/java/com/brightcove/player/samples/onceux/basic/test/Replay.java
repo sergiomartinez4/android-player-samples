@@ -90,7 +90,7 @@ public class Replay extends OnceUxUiAutomatorBase {
      * @throws UiObjecNotFoundException if called within an ad block, where the fast forward
      * button does not exist.
      */
-    private void skipAhead(int secondsValue) throws Exception {
+    private void skipAhead(int secondsValue) throws UiObjectNotFoundException {
         Log.v(TAG, "Fast forwarding " + secondsValue + " seconds.");
         UiObject ffwdButton = new UiObject(new UiSelector().resourceId("android:id/ffwd"));
         int ffwdSecondsValue = 15;
@@ -99,12 +99,10 @@ public class Replay extends OnceUxUiAutomatorBase {
         double result = (double) secondsValue / ffwdSecondsValue;
         int r = (int) result;
         Log.v(TAG, "Fast forwarding " + secondsValue + " seconds requires " + result + " presses of the fast forward button. The button should be pressed " + r + " times.");
-        /* This has been commented out due to a bug that makes fast forwarding impossible.
-        for (int i = 1; i < r; i++) {
+        for (int i = 0; i < r; i++) {
             ffwdButton.click();
             Log.v(TAG, "Fast forwarding. Number of fast forwards: " + i);
         }
-        */
     }
 
     /**
@@ -114,14 +112,11 @@ public class Replay extends OnceUxUiAutomatorBase {
     private void setUpReplay() throws Exception {
         super.playVideo();
         
-        TimeUnit.SECONDS.sleep(200);
-        /* This has been commented out due to a bug that makes fast forwarding impossible.
-        TimeUnit.SECONDS.sleep(32);
+        TimeUnit.SECONDS.sleep(31);
         skipAhead(30);
-        TimeUnit.SECONDS.sleep(30);
+        TimeUnit.SECONDS.sleep(31);
         skipAhead(77);
         TimeUnit.SECONDS.sleep(35);
-        */
 
         // Due to the nature of the sample app, the first play after it has concluded serves as an
         // alert that the video needs to reload. The second play serves to actually play.
