@@ -57,6 +57,12 @@ public class TestPlayStartMess extends OnceUxUiAutomatorBase {
         assertFalse("Failure: Seek Bar found.", seekBar.waitForExists(msecToPreroll));
     }
 
+    public void testPlayStartMessPlayCheck() throws UiObjectNotFoundException, InterruptedException {
+        Log.v(TAG, "Beginning testPlayStartMessPlayCheck");
+        playVideoSpecialized();
+        assertFalse("Failure: Play has not begun", currentTimeView.getText().equals("00:00"));
+    }
+
     /**
      * The scenario as described in the class level comment occurs based on an outdated 
      * version of the playVideo method. As a result, that version needed to be 

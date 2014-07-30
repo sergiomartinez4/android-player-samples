@@ -73,7 +73,7 @@ public abstract class OnceUxUiAutomatorBase extends UiAutomatorTestCase {
 
 
 
-    // Class Constants for skipAhead
+    // Class Constants for waiting and skipAhead
 
     /**
      * The timeout to the first ad break in milliseconds.

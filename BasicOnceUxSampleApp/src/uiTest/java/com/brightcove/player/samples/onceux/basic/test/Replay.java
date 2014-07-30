@@ -69,6 +69,17 @@ public class Replay extends OnceUxUiAutomatorBase {
         Log.v(TAG, "Finished testReplayCheckAdBreaks");
     }
 
+    public void testReplayPlay() throws UiObjectNotFoundException, InterruptedException {
+        Log.v(TAG, "Beginning testReplayCheckAdBreaks");
+        setUpReplay();
+
+        TimeUnit.MILLISECONDS.sleep(msecToPreroll);
+        assertFalse("Failure: Play has not begun.", currentTimeView.getText().equals("00:00"));
+        Log.v(TAG, "Finished testReplayCheckAdBreaks");
+        
+    }
+
+
     // Utility Methods
 
     /**
@@ -78,10 +89,13 @@ public class Replay extends OnceUxUiAutomatorBase {
     private void setUpReplay() throws UiObjectNotFoundException, InterruptedException {
         playVideo();
         TimeUnit.MILLISECONDS.sleep(msecToPreroll);
+        Log.v(TAG, "Ad type: " + ADTYPE_PREROLL);
         assertTrue("Preroll ad break did not complete in time.", adOverlayTextView.waitUntilGone(msecAdBreakLength));
         skipAhead(msecToMidroll);
+        Log.v(TAG, "Ad type: " + ADTYPE_MIDROLL);
         assertTrue("Midroll ad break did not complete in time.", adOverlayTextView.waitUntilGone(msecAdBreakLength));
         skipAhead(msecToPostroll);
+        Log.v(TAG, "Ad type: " + ADTYPE_POSTROLL);
         assertTrue("Postroll ad break did not complete in time.", adOverlayTextView.waitUntilGone(msecAdBreakLength));
 
         // Due to the nature of the sample app, the first play after it has concluded serves as an
