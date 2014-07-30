@@ -57,14 +57,20 @@ public abstract class OnceUxUiAutomatorBase extends UiAutomatorTestCase {
     protected final UiObject totalTimeView = new UiObject(new UiSelector().resourceId("android:id/time"));
 
     /**
-     * The UiObject that represents the rewind button.
+     * The UiObject that represents the rewind button in the media controls.
      */
     protected final UiObject rewButton = new UiObject(new UiSelector().resourceId("android:id/rew"));
 
     /**
-     * The UiObject that represents the fast forward button.
+     * The UiObject that represents the fast forward button in the media controls.
      */
     protected final UiObject ffwdButton = new UiObject(new UiSelector().resourceId("android:id/ffwd"));
+
+    /**
+     * The UiObject that represents the seek bar in the media controls.
+     */
+    protected final UiObject seekBar = new UiObject(new UiSelector().resourceId("android:id/mediacontroller_progress"));
+
 
 
     // Class Constants for skipAhead

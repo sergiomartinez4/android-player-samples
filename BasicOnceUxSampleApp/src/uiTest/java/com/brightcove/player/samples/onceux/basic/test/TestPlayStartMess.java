@@ -54,7 +54,6 @@ public class TestPlayStartMess extends OnceUxUiAutomatorBase {
     public void testPlayStartMessSeekBarCheck() throws UiObjectNotFoundException {
         Log.v(TAG, "Beginning testPlayStartMessSeekBarCheck");
         playVideoSpecialized();
-        UiObject seekBar = new UiObject(new UiSelector().resourceId("android:id/mediacontroller_progress"));
         assertFalse("Failure: Seek Bar found.", seekBar.waitForExists(msecToPreroll));
     }
 

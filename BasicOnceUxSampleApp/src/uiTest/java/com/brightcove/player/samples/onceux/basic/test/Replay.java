@@ -64,7 +64,8 @@ public class Replay extends OnceUxUiAutomatorBase {
         setUpReplay();
 
         TimeUnit.MILLISECONDS.sleep(msecToPreroll);
-        assertTrue("Failure: Ad Break Not Found.", (adOverlayTextView.waitForExists(30000)));
+        assertTrue("Failure: Ad Break Not Found.", adOverlayTextView.waitForExists(15000));
+        assertFalse("Failure: Seek controls found.", seekBar.waitForExists(15000));
         Log.v(TAG, "Finished testReplayCheckAdBreaks");
     }
 
