@@ -33,7 +33,7 @@ public class CompanionAdTestCase extends OnceUxUiAutomatorBase {
      * next ad break to begin, and tests that ad break's companion ad. If any of the companion
      * ads do not vanish, or the ad breaks do not begin or end on time, then the test will fail.
      */
-    public void testCompanionAdPresence() throws Exception {
+    public void testCompanionAdPresence() throws UiObjectNotFoundException, InterruptedException {
         Log.v(TAG, "Beginning testCompanionAdPresence");
         playVideo();
         waitForCompanionAdCheck(msecToPreroll, ADTYPE_PREROLL);
@@ -52,7 +52,7 @@ public class CompanionAdTestCase extends OnceUxUiAutomatorBase {
      * for the particular ad being used. As a result, the selector should be changed accordingnly
      * if a different ad is used.
      */
-    public void testCompanionAdLink() throws Exception {
+    public void testCompanionAdLink() throws UiObjectNotFoundException, InterruptedException {
         Log.v(TAG, "Beginning testCompanionAdLink");
         playVideo();
         waitForCompanionAdCheck(msecToPreroll, ADTYPE_PREROLL);
@@ -72,7 +72,7 @@ public class CompanionAdTestCase extends OnceUxUiAutomatorBase {
      *
      * @return true if the companion ad is found, otherwise false.
      */
-    private boolean companionCheck() throws Exception {
+    private boolean companionCheck() throws InterruptedException {
         Log.v(TAG, "Beginning companionCheck");
         UiObject companionAdFrame = new UiObject(new UiSelector().resourceId("com.brightcove.player.samples.onceux.basic:id/ad_frame"));
         try {
@@ -91,7 +91,7 @@ public class CompanionAdTestCase extends OnceUxUiAutomatorBase {
      * @param  int msec the desired number of milliseconds to wait before giving up on the next ad break loading
      * @param  String adType the string identifier for the specific adbreak the method plans to wait to. Only effects logcat.
      */
-    private void skipAheadCompanionAdCheck(int msec, String adType) throws Exception {
+    private void skipAheadCompanionAdCheck(int msec, String adType) throws InterruptedException {
         Log.v(TAG, "Beginning waitForCompanionAdCheck");
         skipAhead(msec);
         assertTrue("The " + adType + " ad break did not begin in time.", adOverlayTextView.waitForExists(msec));
@@ -106,7 +106,7 @@ public class CompanionAdTestCase extends OnceUxUiAutomatorBase {
      * @param  int msec the desired number of milliseconds to wait before giving up on the next ad break loading
      * @param  String adType the string identifier for the specific adbreak the method plans to wait to. Only effects logcat.
      */
-    private void waitForCompanionAdCheck(int msec, String adType) throws Exception {
+    private void waitForCompanionAdCheck(int msec, String adType) throws InterruptedException {
         Log.v(TAG, "Beginning waitForCompanionAdCheck");
         assertTrue("The " + adType + " ad break did not begin in time.", adOverlayTextView.waitForExists(msec));
         assertTrue(companionCheck());
@@ -120,7 +120,7 @@ public class CompanionAdTestCase extends OnceUxUiAutomatorBase {
      *
      * @param  String adType the string identifier for the specific adbreak the method plans to wait to. Only effects logcat.
      */
-    private void waitForEndOfAdCheck(String adType) throws Exception {
+    private void waitForEndOfAdCheck(String adType) throws InterruptedException {
         Log.v(TAG, "Beginning waitForEndOfAdCheck");
         assertTrue("The " + adType + " ad break did not complete in time.", companionAd.waitUntilGone(msecAdBreakLength));
         toggleSeekControlsVisibility();

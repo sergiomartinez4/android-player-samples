@@ -44,7 +44,7 @@ public class LearnMoreTestCase extends OnceUxUiAutomatorBase {
      * utility method from the superclass to begin then waiting a few seconds for the ad break 
      * to start, then it calls upon adBreakHandler, which performs the test.
      */
-    public void testLearnMoreCheckPrerolls() throws Exception {
+    public void testLearnMoreCheckPrerolls() throws UiObjectNotFoundException, InterruptedException {
         //Calls upon utility methods, makes assertions that prerolls should have the "Learn More" UiObject.
         Log.v(TAG, "Beginning testLearnMoreCheckPrerolls.");
         playVideo();
@@ -61,7 +61,7 @@ public class LearnMoreTestCase extends OnceUxUiAutomatorBase {
      * from the superclass to begin, then waiting a for the ad break to start, then it calls upon 
      * the adBreakHandler utility method, which performs the test.
      */
-    public void testLearnMoreCheckMidrolls() throws Exception {
+    public void testLearnMoreCheckMidrolls() throws UiObjectNotFoundException, InterruptedException {
         //Calls upon utility methods, makes assertions that midrolls should not have the "Learn More" UiObject.
         Log.v(TAG, "Beginning testLearnMoreCheckMidrolls");
         playVideo();
@@ -78,7 +78,7 @@ public class LearnMoreTestCase extends OnceUxUiAutomatorBase {
      * utility method from the superclass to begin, then waiting a few seconds for the ad break
      *  to start, then it calls upon the adBreakHandler utility method, which performs the test.
      */
-    public void testLearnMoreCheckPostrolls() throws Exception {
+    public void testLearnMoreCheckPostrolls() throws UiObjectNotFoundException, InterruptedException {
         //Calls upon utility methods, makes assertions that prerolls should have the "Learn More" UiObject.
         Log.v(TAG, "Beginning testLearnMoreCheckPostrolls");
         playVideo();
@@ -126,7 +126,7 @@ public class LearnMoreTestCase extends OnceUxUiAutomatorBase {
      * that object and verifying if it is enabled, the test for Learn More is done, then the test 
      * waits for the object to disappear, signaling the end of the ad break.
      */
-    private void adBreakHandler() throws Exception {
+    private void adBreakHandler() throws UiObjectNotFoundException {
         if (adOverlayTextView.exists() && adOverlayTextView.isEnabled()) {
             Log.v(TAG, "Ad Break started.");
             assertTrue("Conditions did not match.", learnMoreChecker());

@@ -28,7 +28,7 @@ public class AdOverlayCountdown extends OnceUxUiAutomatorBase {
      * 29 and no more than 31 for the entirety of the ad break. This check should occur every 
      * second until the ad break has concluded. 
      */
-    public void testAdOverlayCountdown() throws Exception {
+    public void testAdOverlayCountdown() throws UiObjectNotFoundException, InterruptedException {
         Log.v(TAG, "Beginning testAdOverlayCountdown");
         playVideo();
         Log.v(TAG, "Play clicked. Pressing pause...");

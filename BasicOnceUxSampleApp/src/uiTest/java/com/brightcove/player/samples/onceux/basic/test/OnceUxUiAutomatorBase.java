@@ -310,7 +310,7 @@ public abstract class OnceUxUiAutomatorBase extends UiAutomatorTestCase {
      * @throws UiObjecNotFoundException if called within an ad block, where the fast forward
      * button does not exist.
      */
-    protected void skipAhead(int millisecondsValue) throws UiObjectNotFoundException, InterruptedException {
+    protected void skipAhead(int millisecondsValue) throws InterruptedException {
         Log.v(TAG, "Fast forwarding " + millisecondsValue + " seconds.");
         int finalMilliseconds = (millisecondsValue - 4000);
         int ffwdMillisecondsValue = 15000;

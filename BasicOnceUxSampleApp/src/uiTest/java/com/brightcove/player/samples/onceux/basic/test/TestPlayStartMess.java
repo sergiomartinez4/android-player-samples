@@ -30,7 +30,7 @@ public class TestPlayStartMess extends OnceUxUiAutomatorBase {
      * then checks for the presence of the fast forward button. If it is present, the test
      * will fail.
      */
-    public void testPlayStartMessFFWDCheck() throws Exception {
+    public void testPlayStartMessFFWDCheck() throws UiObjectNotFoundException {
         Log.v(TAG, "Beginning testPlayStartMessFFWDCheck");
         playVideoSpecialized();
         assertFalse("Failure: Fast Forward button found.", ffwdButton.waitForExists(msecToPreroll));
@@ -41,7 +41,7 @@ public class TestPlayStartMess extends OnceUxUiAutomatorBase {
      * then checks for the presence of the rewind button. If it is present, the test will
      * fail.
      */
-    public void testPlayStartMessREWCheck() throws Exception {
+    public void testPlayStartMessREWCheck() throws UiObjectNotFoundException {
         Log.v(TAG, "Beginning testPlayStartMessREWCheck");
         playVideoSpecialized();
         assertFalse("Failure: Rewind button found.", rewButton.waitForExists(msecToPreroll));
@@ -51,7 +51,7 @@ public class TestPlayStartMess extends OnceUxUiAutomatorBase {
      * testPlayStartMessFFWDCheck creates the scenario described in the class level comment,
      * then checks for the presence of the seek bar. If it is present, the test will fail.
      */
-    public void testPlayStartMessSeekBarCheck() throws Exception {
+    public void testPlayStartMessSeekBarCheck() throws UiObjectNotFoundException {
         Log.v(TAG, "Beginning testPlayStartMessSeekBarCheck");
         playVideoSpecialized();
         UiObject seekBar = new UiObject(new UiSelector().resourceId("android:id/mediacontroller_progress"));
@@ -63,7 +63,7 @@ public class TestPlayStartMess extends OnceUxUiAutomatorBase {
      * version of the playVideo method. As a result, that version needed to be 
      * preserved here for testing.
      */
-    private void playVideoSpecialized() throws Exception {
+    private void playVideoSpecialized() throws UiObjectNotFoundException {
         playPauseButton.waitForExists(6000);
         Log.v(TAG, "Pressing Play...");
         try {

@@ -32,7 +32,7 @@ public class Replay extends OnceUxUiAutomatorBase {
      * play again. After it begins play, it waits another few seconds, then checks the player
      * has progressed the correct number of seconds.
      */
-    public void testReplay() throws Exception {
+    public void testReplay() throws UiObjectNotFoundException, InterruptedException {
         Log.v(TAG, "Beginning testReplay");
         setUpReplay();
         TimeUnit.MILLISECONDS.sleep(msecToPreroll);
@@ -58,7 +58,7 @@ public class Replay extends OnceUxUiAutomatorBase {
      * UiWatcher that watches for a UiObject whose text begins with "Your video will resume in"
      * and fails if it is present. This object is present in Ad Breaks and only ad breaks.
      */
-    public void testReplayCheckAdBreaks() throws Exception {
+    public void testReplayCheckAdBreaks() throws UiObjectNotFoundException, InterruptedException {
         Log.v(TAG, "Beginning testReplayCheckAdBreaks");
         setUpReplay();
 
@@ -73,7 +73,7 @@ public class Replay extends OnceUxUiAutomatorBase {
      * setUpReplay programmatically moves through the video to help expedite the process. It calls upon
      * the skipAhead utility method to skip content blocks and waits through ad blocks.
      */
-    private void setUpReplay() throws Exception {
+    private void setUpReplay() throws UiObjectNotFoundException, InterruptedException {
         playVideo();
         TimeUnit.MILLISECONDS.sleep(msecToPreroll);
         assertTrue("Preroll ad break did not complete in time.", adOverlayTextView.waitUntilGone(msecAdBreakLength));

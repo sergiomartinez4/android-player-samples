@@ -4,6 +4,7 @@ import android.util.Log;
 import java.util.concurrent.TimeUnit;
 import android.view.View;
 import android.graphics.Rect;
+import android.os.RemoteException;
 
 import com.android.uiautomator.core.UiObject;
 import com.android.uiautomator.core.UiObjectNotFoundException;
@@ -40,7 +41,7 @@ public class VideoFrameTestCase extends OnceUxUiAutomatorBase {
      * the rect into four different ints. Then, the four int pairs are asserted to be identical, as
      * the video's location should not change after play.
      */
-    public void testVideoFrameBounds() throws Exception {
+    public void testVideoFrameBounds() throws UiObjectNotFoundException, InterruptedException, RemoteException {
         Log.v(TAG, "Beginning testPlayStartMessViewBounds");
         // The play button is being used to check when seek controls first appear,
         // which is when the video gets its first size and location.

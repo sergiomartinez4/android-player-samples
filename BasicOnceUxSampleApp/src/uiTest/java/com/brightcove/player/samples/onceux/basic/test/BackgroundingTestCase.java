@@ -3,6 +3,7 @@ package com.brightcove.player.samples.onceux.basic.test;
 import java.util.concurrent.TimeUnit;
 
 import android.util.Log;
+import android.os.RemoteException;
 
 import com.android.uiautomator.core.UiObject;
 import com.android.uiautomator.core.UiObjectNotFoundException;
@@ -44,7 +45,7 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
      * is quickly paused to keep the current time, at which point the time is documented,
      * and then the comparison occurrs. The test asserts stringComparison will return true.
      */
-    public void testBackgroundAdBreakPlaying() throws Exception {
+    public void testBackgroundAdBreakPlaying() throws UiObjectNotFoundException, InterruptedException, RemoteException {
         Log.v(TAG, "Beginning testBackgroundAdBreakPlaying");
         playVideo();
         TimeUnit.MILLISECONDS.sleep(msecToPreroll);
@@ -58,7 +59,7 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
      * with one exception: it waits five seconds after play has begun, then pauses the
      * video *before* launching getBackgroundTimes. The rest of the process is identical.
      */
-    public void testBackgroundAdBreakPaused() throws Exception {
+    public void testBackgroundAdBreakPaused() throws UiObjectNotFoundException, InterruptedException, RemoteException {
         Log.v(TAG, "Beginning testBackgroundAdBreakPaused");
         playVideo();
         TimeUnit.MILLISECONDS.sleep(msecToPreroll);
@@ -71,7 +72,7 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
      * testBackgroundAdBreakSeekControls backgrounds the sample app during an ad break, then
      * asserts that the seek bar should not be present. If it is present, the test fails.
      */
-    public void testBackgroundAdBreakSeekControls() throws Exception {
+    public void testBackgroundAdBreakSeekControls() throws UiObjectNotFoundException, InterruptedException, RemoteException {
         Log.v(TAG, "Beginning testBackgroundAdBreakSeekControls");
         playVideo();
         TimeUnit.MILLISECONDS.sleep(msecToPreroll);
@@ -90,7 +91,7 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
      * it waits 40 seconds (for the preroll ad to finish), then begins getBackgroundTimes.
      * It follows the same pattern as testBackgroundAdBreakPlaying for the rest of the check.
      */
-    public void testBackgroundContentBlockPlaying() throws Exception {
+    public void testBackgroundContentBlockPlaying() throws UiObjectNotFoundException, InterruptedException, RemoteException {
         Log.v(TAG, "Beginning testBackgroundContentBlockPlaying");
         playVideo();
         TimeUnit.MILLISECONDS.sleep(msecToPreroll + msecAdBreakLength);
@@ -103,7 +104,7 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
      * testBackgroundContentBlockPaused performs exactly like testBackgroundContentBlockPlaying,
      * but pauses the video before beginning getBackgroundTimes.
      */
-    public void testBackgroundContentBlockPaused() throws Exception {
+    public void testBackgroundContentBlockPaused() throws UiObjectNotFoundException, InterruptedException, RemoteException {
         Log.v(TAG, "Beginning testBackgroundContentBlockPaused");
         playVideo();
         TimeUnit.MILLISECONDS.sleep(msecToPreroll + msecAdBreakLength);
@@ -116,7 +117,7 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
      * testBackgroundContentBlockTotalTime performs a similar test to the other content block tests,
      * but instead of assessing the current time, it assesses the total time.
      */
-    public void testBackgroundContentBlockTotalTime() throws Exception {
+    public void testBackgroundContentBlockTotalTime() throws UiObjectNotFoundException, InterruptedException, RemoteException {
         Log.v(TAG, "Beginning testBackgroundContentBlockTotalTime");
         // Navigate to the content, and gather the total time information, and assert that it's correct before backgrounding.
         playVideo();
@@ -141,7 +142,7 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
      * it, and documents it. The current time is documented by taking hold of the UiObject,
      * and converting its text into a string.
      */
-    private void getBackgroundTimes() throws Exception {
+    private void getBackgroundTimes() throws UiObjectNotFoundException, InterruptedException, RemoteException {
         Log.v(TAG, "Beginning getBackgroundTimes.");
         // Obtain the relevant text, then leave the app.
         currentTimeStringBeforeBackground = getTextFromUiObject(currentTimeView);
