@@ -33,7 +33,7 @@ public class TestPlayStartMess extends OnceUxUiAutomatorBase {
     public void testPlayStartMessFFWDCheck() throws Exception {
         Log.v(TAG, "Beginning testPlayStartMessFFWDCheck");
         playVideoSpecialized();
-        assertFalse("Failure: Fast Forward button found.", ffwdButton.waitForExists(10000));
+        assertFalse("Failure: Fast Forward button found.", ffwdButton.waitForExists(msecToPreroll));
     }
 
     /**
@@ -44,7 +44,7 @@ public class TestPlayStartMess extends OnceUxUiAutomatorBase {
     public void testPlayStartMessREWCheck() throws Exception {
         Log.v(TAG, "Beginning testPlayStartMessREWCheck");
         playVideoSpecialized();
-        assertFalse("Failure: Rewind button found.", rewButton.waitForExists(10000));
+        assertFalse("Failure: Rewind button found.", rewButton.waitForExists(msecToPreroll));
     }
 
     /**
@@ -55,7 +55,7 @@ public class TestPlayStartMess extends OnceUxUiAutomatorBase {
         Log.v(TAG, "Beginning testPlayStartMessSeekBarCheck");
         playVideoSpecialized();
         UiObject seekBar = new UiObject(new UiSelector().resourceId("android:id/mediacontroller_progress"));
-        assertFalse("Failure: Seek Bar found.", seekBar.waitForExists(10000));
+        assertFalse("Failure: Seek Bar found.", seekBar.waitForExists(msecToPreroll));
     }
 
     /**

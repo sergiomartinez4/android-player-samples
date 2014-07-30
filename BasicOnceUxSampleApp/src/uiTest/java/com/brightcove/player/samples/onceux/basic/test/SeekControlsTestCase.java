@@ -30,11 +30,7 @@ public class SeekControlsTestCase extends OnceUxUiAutomatorBase {
      */
     public void testSeekControlsBreakTime() throws UiObjectNotFoundException, InterruptedException {
         Log.v(TAG, "Beginning testSeekControlsBreakTime");
-        // Navigate to Content
-        playVideo();
-        TimeUnit.SECONDS.sleep(5);
-        playPauseButton.waitForExists(30000);
-        Log.v(TAG, "Ad Break ended.");
+        navigateToContent();
 
         // Test Fast Forward functionality
         ffwdButton.click();
@@ -56,11 +52,7 @@ public class SeekControlsTestCase extends OnceUxUiAutomatorBase {
      */
     public void testMultipleRewinds() throws UiObjectNotFoundException, InterruptedException {
         Log.v(TAG, "Beginning testMultipleRewinds");
-        // Navigate to Content.
-        playVideo();
-        TimeUnit.SECONDS.sleep(5);
-        playPauseButton.waitForExists(30000);
-        Log.v(TAG, "Ad Break ended.");
+        navigateToContent();
 
         // Pause, Fast Forward, and capture the current time to prepare for rewinding.
         pauseVideo();
@@ -76,6 +68,14 @@ public class SeekControlsTestCase extends OnceUxUiAutomatorBase {
         rewButton.click();
         String currentTimeString2 = currentTimeView.getText();
         stringComparison(currentTimeString1, currentTimeString2);
+    }
+
+    private void navigateToContent() throws UiObjectNotFoundException, InterruptedException {
+        // Navigate to Content.
+        playVideo();
+        TimeUnit.SECONDS.sleep(5);
+        playPauseButton.waitForExists(msecAdBreakLength);
+        Log.v(TAG, "Ad Break ended.");
     }
 
     /**

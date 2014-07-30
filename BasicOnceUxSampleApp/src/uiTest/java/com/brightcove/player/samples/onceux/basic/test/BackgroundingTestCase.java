@@ -47,7 +47,7 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
     public void testBackgroundAdBreakPlaying() throws Exception {
         Log.v(TAG, "Beginning testBackgroundAdBreakPlaying");
         playVideo();
-        TimeUnit.SECONDS.sleep(5);
+        TimeUnit.MILLISECONDS.sleep(msecToPreroll);
         toggleSeekControlsVisibility();
         getBackgroundTimes();
         stringComparison();
@@ -61,7 +61,7 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
     public void testBackgroundAdBreakPaused() throws Exception {
         Log.v(TAG, "Beginning testBackgroundAdBreakPaused");
         playVideo();
-        TimeUnit.SECONDS.sleep(5);
+        TimeUnit.MILLISECONDS.sleep(msecToPreroll);
         pauseVideo();
         getBackgroundTimes();
         stringComparison();
@@ -74,7 +74,7 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
     public void testBackgroundAdBreakSeekControls() throws Exception {
         Log.v(TAG, "Beginning testBackgroundAdBreakSeekControls");
         playVideo();
-        TimeUnit.SECONDS.sleep(5);
+        TimeUnit.MILLISECONDS.sleep(msecToPreroll);
         toggleSeekControlsVisibility();
         getBackgroundTimes();
         TimeUnit.SECONDS.sleep(1);
@@ -93,7 +93,7 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
     public void testBackgroundContentBlockPlaying() throws Exception {
         Log.v(TAG, "Beginning testBackgroundContentBlockPlaying");
         playVideo();
-        TimeUnit.SECONDS.sleep(45);
+        TimeUnit.MILLISECONDS.sleep(msecToPreroll + msecAdBreakLength);
         toggleSeekControlsVisibility();
         getBackgroundTimes();
         stringComparison();
@@ -106,7 +106,7 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
     public void testBackgroundContentBlockPaused() throws Exception {
         Log.v(TAG, "Beginning testBackgroundContentBlockPaused");
         playVideo();
-        TimeUnit.SECONDS.sleep(45);
+        TimeUnit.MILLISECONDS.sleep(msecToPreroll + msecAdBreakLength);
         pauseVideo();
         getBackgroundTimes();
         stringComparison();
@@ -120,7 +120,7 @@ public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
         Log.v(TAG, "Beginning testBackgroundContentBlockTotalTime");
         // Navigate to the content, and gather the total time information, and assert that it's correct before backgrounding.
         playVideo();
-        TimeUnit.SECONDS.sleep(45);
+        TimeUnit.MILLISECONDS.sleep(msecToPreroll + msecAdBreakLength);
         toggleSeekControlsVisibility();
         String beforeTime = getTextFromUiObject(totalTimeView);
         assertTrue("Timeline changed, content is now " + beforeTime + ".", beforeTime.equals("01:45"));

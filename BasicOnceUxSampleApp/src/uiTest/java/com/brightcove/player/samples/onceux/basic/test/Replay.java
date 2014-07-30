@@ -35,7 +35,7 @@ public class Replay extends OnceUxUiAutomatorBase {
     public void testReplay() throws Exception {
         Log.v(TAG, "Beginning testReplay");
         setUpReplay();
-        TimeUnit.SECONDS.sleep(5);
+        TimeUnit.MILLISECONDS.sleep(msecToPreroll);
         String currentTimeString;
         try {
             toggleSeekControlsVisibility();
@@ -47,7 +47,7 @@ public class Replay extends OnceUxUiAutomatorBase {
             currentTimeString = currentTimeView.getText();
             Log.v(TAG, "Current time is " + currentTimeString);
         }
-        assertTrue("Incorrect time elapsed.", currentTimeString.equals("00:05"));
+        assertFalse("Time has not elapsed.", currentTimeString.equals("00:00"));
         Log.v(TAG, "Finished testReplay");
 
     }
@@ -62,40 +62,12 @@ public class Replay extends OnceUxUiAutomatorBase {
         Log.v(TAG, "Beginning testReplayCheckAdBreaks");
         setUpReplay();
 
-        TimeUnit.SECONDS.sleep(5);
+        TimeUnit.MILLISECONDS.sleep(msecToPreroll);
         assertTrue("Failure: Ad Break Not Found.", (adOverlayTextView.waitForExists(30000)));
         Log.v(TAG, "Finished testReplayCheckAdBreaks");
     }
 
     // Utility Methods
-
-  /**
-     * skipAhead uses the UiAutomator API to press the fast forward button a number of times,
-     * based on the input number. It takes the number of seconds, divided by how many seconds
-     * a single press of the fast forward button moves, then (after rounding down that number)
-     * presses the fast forward button the number of times calculated.
-     *
-     * Unfortunately, due to the nature of the Sample App as it is now, fast forwarding will often
-     * get caught in a loop and end up 30 seconds or even a full minute backward, criplling its
-     * functionality. As a result, until this is fixed, skipAhead will print out the information
-     * that has been specified, but not do any actual fast forwarding.
-     *
-     * @throws UiObjecNotFoundException if called within an ad block, where the fast forward
-     * button does not exist.
-     */
-    private void skipAhead(int secondsValue) throws UiObjectNotFoundException {
-        Log.v(TAG, "Fast forwarding " + secondsValue + " seconds.");
-        int ffwdSecondsValue = 15;
-        // Cast to a double for the floating point divison, then recast to an int to round it 
-        // down to a whole number and so the for parameter is comparing two numbers of the same type.
-        double result = (double) secondsValue / ffwdSecondsValue;
-        int r = (int) result;
-        Log.v(TAG, "Fast forwarding " + secondsValue + " seconds requires " + result + " presses of the fast forward button. The button should be pressed " + r + " times.");
-        for (int i = 0; i < r; i++) {
-            ffwdButton.click();
-            Log.v(TAG, "Fast forwarding. Number of fast forwards: " + i);
-        }
-    }
 
     /**
      * setUpReplay programmatically moves through the video to help expedite the process. It calls upon
@@ -103,16 +75,17 @@ public class Replay extends OnceUxUiAutomatorBase {
      */
     private void setUpReplay() throws Exception {
         playVideo();
-        
-        TimeUnit.SECONDS.sleep(31);
-        skipAhead(30);
-        TimeUnit.SECONDS.sleep(31);
-        skipAhead(77);
-        TimeUnit.SECONDS.sleep(35);
+        TimeUnit.MILLISECONDS.sleep(msecToPreroll);
+        assertTrue("Preroll ad break did not complete in time.", adOverlayTextView.waitUntilGone(msecAdBreakLength));
+        skipAhead(msecToMidroll);
+        assertTrue("Midroll ad break did not complete in time.", adOverlayTextView.waitUntilGone(msecAdBreakLength));
+        skipAhead(msecToPostroll);
+        assertTrue("Postroll ad break did not complete in time.", adOverlayTextView.waitUntilGone(msecAdBreakLength));
 
         // Due to the nature of the sample app, the first play after it has concluded serves as an
         // alert that the video needs to reload. The second play serves to actually play.
         playVideo();
+        TimeUnit.SECONDS.sleep(4);
         playVideo();
 
     }

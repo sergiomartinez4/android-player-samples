@@ -67,8 +67,45 @@ public abstract class OnceUxUiAutomatorBase extends UiAutomatorTestCase {
     protected final UiObject ffwdButton = new UiObject(new UiSelector().resourceId("android:id/ffwd"));
 
 
+    // Class Constants for skipAhead
 
-    // Class Variables for the Setup
+    /**
+     * The timeout to the first ad break in milliseconds.
+     */
+    protected final int msecToPreroll = 8000;
+
+    /**
+     * The timeout to the second ad break in milliseconds
+     */
+    protected final int msecToMidroll = 35000;
+
+    /**
+     * The timeout to the third ad break in milliseconds
+     */
+    protected final int msecToPostroll = 112000;
+
+    /**
+     * The length of the ad breaks in milliseconds 
+     */
+    protected final int msecAdBreakLength = 30000;
+
+    /**
+     * The string that identifies a preroll ad type
+     */
+    protected final String ADTYPE_PREROLL = "preroll";
+
+    /**
+     * The string that identifies a midroll ad type
+     */
+    protected final String ADTYPE_MIDROLL = "midroll";
+
+    /**
+     * The string that identifies a postroll ad type
+     */
+    protected final String ADTYPE_POSTROLL = "postroll";
+
+
+    // Class Variables for the setUp and tearDown
     /**
      * The UiObject that represents the apps button.
      */
@@ -241,7 +278,7 @@ public abstract class OnceUxUiAutomatorBase extends UiAutomatorTestCase {
      * utility method will execute a play function. This is because pause and play functions are both
      * mapped to a single resource id, "android:id/pause".
      */
-    private void pauseVideo() throws InterruptedException {
+    protected void pauseVideo() throws InterruptedException {
         // First, we bring up the play/seek control menu, then press pause.
         toggleSeekControlsVisibility();
         TimeUnit.MILLISECONDS.sleep(500);
@@ -264,6 +301,45 @@ public abstract class OnceUxUiAutomatorBase extends UiAutomatorTestCase {
         }
     }
 
+  /**
+     * skipAhead uses the UiAutomator API to press the fast forward button a number of times,
+     * based on the input number. It takes the number of seconds, divided by how many seconds
+     * a single press of the fast forward button moves, then (after rounding down that number)
+     * presses the fast forward button the number of times calculated.
+     *
+     * @throws UiObjecNotFoundException if called within an ad block, where the fast forward
+     * button does not exist.
+     */
+    protected void skipAhead(int millisecondsValue) throws UiObjectNotFoundException, InterruptedException {
+        Log.v(TAG, "Fast forwarding " + millisecondsValue + " seconds.");
+        int finalMilliseconds = (millisecondsValue - 4000);
+        int ffwdMillisecondsValue = 15000;
+        // Cast to a double for the floating point divison, then recast to an int to round it 
+        // down to a whole number and so the for parameter is comparing two numbers of the same type.
+        double result = (double) finalMilliseconds / ffwdMillisecondsValue;
+        int r = (int) result;
+        TimeUnit.SECONDS.sleep(4);
+        Log.v(TAG, "Fast forwarding " + millisecondsValue + " seconds requires " + result + " presses of the fast forward button. The button should be pressed " + r + " times.");
+        // Fast Forward loop opens and closes seek controls before and after each press to avoid the controls timing out.
+        for (int i = 0; i < r; i++) {
+            try {
+                toggleSeekControlsVisibility();
+                ffwdButton.click();
+                Log.v(TAG, "Fast forwarding. Number of fast forwards: " + i);
+                toggleSeekControlsVisibility();
+            } catch (UiObjectNotFoundException ffwdNotFound) {
+                // In the event that the sample app's timing is slightly off, skipAhead prepares for a UiObjectNotFoundException.
+                Log.v(TAG, "Fast Forward button not found.");
+                if(adOverlayTextView.exists() ){
+                    Log.v(TAG, "Currently an ad break. No longer fast forwarding.");
+                    break;
+                } else {
+                    Log.v(TAG, "Not currently an ad break. Fast forwarding should still be possible. Trying again.");
+                }
+            }
+        }
+        assertTrue("Not an ad when fast forward finished.", adOverlayTextView.waitForExists(8000));
+    }
 
     /**
      * seekControls provides a method that toggles the accessibility of the seek controls menu,

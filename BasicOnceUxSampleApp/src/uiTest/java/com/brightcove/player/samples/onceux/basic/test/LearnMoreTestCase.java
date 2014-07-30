@@ -46,10 +46,10 @@ public class LearnMoreTestCase extends OnceUxUiAutomatorBase {
      */
     public void testLearnMoreCheckPrerolls() throws Exception {
         //Calls upon utility methods, makes assertions that prerolls should have the "Learn More" UiObject.
-        playVideo();
         Log.v(TAG, "Beginning testLearnMoreCheckPrerolls.");
+        playVideo();
         shouldHaveLearnMore = true;
-        TimeUnit.SECONDS.sleep(10);
+        TimeUnit.MILLISECONDS.sleep(msecToPreroll);
         adBreakHandler();
     }
 
@@ -63,12 +63,14 @@ public class LearnMoreTestCase extends OnceUxUiAutomatorBase {
      */
     public void testLearnMoreCheckMidrolls() throws Exception {
         //Calls upon utility methods, makes assertions that midrolls should not have the "Learn More" UiObject.
-        playVideo();
         Log.v(TAG, "Beginning testLearnMoreCheckMidrolls");
+        playVideo();
         shouldHaveLearnMore = false;
-        TimeUnit.SECONDS.sleep(70);
+        TimeUnit.MILLISECONDS.sleep(msecToPreroll + msecAdBreakLength);
+        toggleSeekControlsVisibility();
+        skipAhead(msecToMidroll);
         adBreakHandler();
-        }
+    }
 
     /**
      * The Postroll test checks the postroll ad break for the presence of the Learn More button.
@@ -78,10 +80,14 @@ public class LearnMoreTestCase extends OnceUxUiAutomatorBase {
      */
     public void testLearnMoreCheckPostrolls() throws Exception {
         //Calls upon utility methods, makes assertions that prerolls should have the "Learn More" UiObject.
-        playVideo();
         Log.v(TAG, "Beginning testLearnMoreCheckPostrolls");
+        playVideo();
         shouldHaveLearnMore = true;
-        TimeUnit.MINUTES.sleep(3);
+        TimeUnit.MILLISECONDS.sleep(msecToPreroll + msecAdBreakLength);
+        toggleSeekControlsVisibility();
+        skipAhead(msecToMidroll);
+        TimeUnit.MILLISECONDS.sleep(msecAdBreakLength);
+        skipAhead(msecToPostroll);
         adBreakHandler();
     }
 
