@@ -74,6 +74,7 @@ public class Replay extends OnceUxUiAutomatorBase {
         setUpReplay();
 
         TimeUnit.MILLISECONDS.sleep(msecToPreroll);
+        toggleSeekControlsVisibility();
         assertFalse("Failure: Play has not begun.", currentTimeView.getText().equals("00:00"));
         Log.v(TAG, "Finished testReplayCheckAdBreaks");
         
