@@ -15,6 +15,8 @@ import com.android.uiautomator.testrunner.UiAutomatorTestCase;
  * Tests that the Sample App can keep track of the playhead position if the user hits the
  * home button while playing or paused, and that the seek controls remain hidden if the
  * backgrounding is initated during an ad break.
+ *
+ * @author Bryan Gregory Scott -- bscott@brightcove.com
  */
 public class BackgroundingTestCase extends OnceUxUiAutomatorBase {
 

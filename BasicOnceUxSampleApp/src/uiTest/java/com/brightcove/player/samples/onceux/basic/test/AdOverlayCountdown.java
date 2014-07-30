@@ -12,6 +12,8 @@ import com.android.uiautomator.testrunner.UiAutomatorTestCase;
 /**
  * Provides a class that will check if the Ad Overlay's countdown during 
  * ad breaks matches up the progress bar's counter within a reasonable degree.
+ *
+ * @author Bryan Gregory Scott -- bscott@brightcove.com
  */
 public class AdOverlayCountdown extends OnceUxUiAutomatorBase {
 

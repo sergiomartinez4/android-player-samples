@@ -9,7 +9,10 @@ import com.android.uiautomator.core.UiObjectNotFoundException;
 import com.android.uiautomator.core.UiScrollable;
 import com.android.uiautomator.core.UiSelector;
 import com.android.uiautomator.testrunner.UiAutomatorTestCase;
-
+/**
+ *
+ * @author Bryan Gregory Scott -- bscott@brightcove.com
+ */
 public class SeekControlsTestCase extends OnceUxUiAutomatorBase {
 
     /**

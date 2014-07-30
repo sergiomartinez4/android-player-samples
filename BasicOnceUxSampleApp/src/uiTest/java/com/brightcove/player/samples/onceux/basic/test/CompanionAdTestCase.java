@@ -10,6 +10,8 @@ import com.android.uiautomator.core.UiDevice;
 
 /**
  * BasicCompanionAdTest tests the presence and functionality of companion ads and their links.
+ *
+ * @author Bryan Gregory Scott -- bscott@brightcove.com
  */
 public class CompanionAdTestCase extends OnceUxUiAutomatorBase {
 

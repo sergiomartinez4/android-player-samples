@@ -14,8 +14,9 @@ import com.android.uiautomator.testrunner.UiAutomatorTestCase;
 
 /**
  * Provides a class to test if the Sample App's replay functionality works correctly, in terms 
- * of actually playing over from the beginning after play has stopped entirely. It also checks
- * that ads can be skipped.
+ * of actually playing over from the beginning after play has stopped entirely. 
+ *
+ * @author Bryan Gregory Scott -- bscott@brightcove.com
  */
 public class Replay extends OnceUxUiAutomatorBase {
 
