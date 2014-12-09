@@ -35,7 +35,6 @@ public class MainActivity extends BrightcovePlayer {
         brightcoveVideoView.start();
 
         ((SeamlessVideoDisplayComponent) brightcoveVideoView.getVideoDisplay()).setClosedCaptionsEnabled(true);
-        brightcoveVideoView.setClosedCaptions(true);
 
         // Log whether or not instance state in non-null.
         if (savedInstanceState != null) {
