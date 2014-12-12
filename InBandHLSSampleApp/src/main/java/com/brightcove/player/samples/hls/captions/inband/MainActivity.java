@@ -2,6 +2,9 @@ package com.brightcove.player.samples.hls.captions.inband;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.brightcove.player.display.SeamlessVideoDisplayComponent;
 import com.brightcove.player.model.Video;
@@ -41,6 +44,24 @@ public class MainActivity extends BrightcovePlayer {
             Log.v(TAG, "Restoring saved position");
         } else {
             Log.v(TAG, "No saved state");
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_cc_settings:
+                showClosedCaptioningDialog();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }
