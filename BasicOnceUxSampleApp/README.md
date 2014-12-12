@@ -1,17 +1,13 @@
 OnceUx Plugin
 =============
 
-Still under development and is experimental  - please use at your own risk.  See release notes in the top level file **release-notes.txt**.
-
-======================
-
 Provides a sample app illustrating how to configure and run the *Brightcove Native Player for Android* **OnceUx Plugin**.
 
 ## Installing and starting the sample app
 
 To focus solely on the OnceUx Plugin, execute these steps from the top level sample app directory:
 
-    gradle :BasicOnceUxSampleApp:clean :BasicOnceUxSampleApp:build :BasicOnceUxSampleApp:installDebug
+    gradlew :BasicOnceUxSampleApp:clean :BasicOnceUxSampleApp:build :BasicOnceUxSampleApp:installDebug
 
 while a device is connected.  Then start the app by selecting it in the app folder on the device.
 
