@@ -8,8 +8,9 @@ import com.brightcove.player.event.EventType;
 import com.brightcove.player.event.EventListener;
 import com.brightcove.player.model.Video;
 import com.brightcove.player.view.BrightcovePlayer;
-import com.google.android.exoplayer.metadata.TxxxMetadata;
-import java.util.Map;
+import com.google.android.exoplayer.metadata.id3.Id3Frame;
+import com.google.android.exoplayer.metadata.id3.TxxxFrame;
+import java.util.List;
 
 /**
  * This app illustrates how to use ID3 tags with the Brightcove
@@ -32,9 +33,10 @@ public class MainActivity extends BrightcovePlayer {
                 ExoPlayerVideoDisplayComponent exoPlayerVideoDisplayComponent =
                     (ExoPlayerVideoDisplayComponent) brightcoveVideoView.getVideoDisplay();
                 exoPlayerVideoDisplayComponent.setMetadataListener(new ExoPlayerVideoDisplayComponent.Id3MetadataListener() {
-                    public void onId3Metadata(Map<String, Object> metadata) {
-                        TxxxMetadata txxxMetadata = (TxxxMetadata) metadata.get("TXXX");
-                        Log.v(TAG, "value: " + txxxMetadata.value);
+                    public void onId3Metadata(List<Id3Frame> id3Frames) {
+                        for (Id3Frame id3Frame : id3Frames) {
+                            Log.v(TAG, "id3Frame: " + id3Frame);
+                        }
                     }
                 });
             }
