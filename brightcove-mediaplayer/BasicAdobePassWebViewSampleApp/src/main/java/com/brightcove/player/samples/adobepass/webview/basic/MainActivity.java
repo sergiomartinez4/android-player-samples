@@ -20,10 +20,10 @@ import com.adobe.adobepass.accessenabler.models.MetadataKey;
 import com.adobe.adobepass.accessenabler.models.MetadataStatus;
 import com.adobe.adobepass.accessenabler.models.Mvpd;
 import com.brightcove.player.event.EventEmitter;
-import com.brightcove.player.media.Catalog;
-import com.brightcove.player.media.PlaylistListener;
-import com.brightcove.player.media.VideoFields;
-import com.brightcove.player.media.VideoListener;
+import com.brightcove.player.edge.Catalog;
+import com.brightcove.player.edge.PlaylistListener;
+import com.brightcove.player.edge.VideoFields;
+import com.brightcove.player.edge.VideoListener;
 import com.brightcove.player.model.Playlist;
 import com.brightcove.player.model.Video;
 import com.brightcove.player.view.BrightcovePlayer;
@@ -115,7 +115,9 @@ public class MainActivity extends BrightcovePlayer implements IAccessEnablerDele
         // Add a test video to the BrightcoveVideoView.
         Map<String, String> options = new HashMap<String, String>();
         List<String> values = new ArrayList<String>(Arrays.asList(VideoFields.DEFAULT_FIELDS));
-        Catalog catalog = new Catalog("ErQk9zUeDVLIp8Dc7aiHKq8hDMgkv5BFU7WGshTc-hpziB3BuYh28A..");
+        Catalog catalog = new Catalog(eventEmitter,
+                "507017973001",
+                "BCpkADawqM2CQbjcdIe1y-Q5X74giDzi_fhQnOensLWwnffXMlCdP9yTzY4_MuYfSbGWGng39dSG1iCNtoUhGmb4jQ-qqqfhMR2_WRGZsWaCBacvgPnEuYS1LzE");
         catalog.findPlaylistByReferenceID("stitch", options, new PlaylistListener() {
             public void onPlaylist(Playlist playlist) {
                 brightcoveVideoView.addAll(playlist.getVideos());

@@ -6,8 +6,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.brightcove.player.media.Catalog;
-import com.brightcove.player.media.VideoListener;
+import com.brightcove.player.edge.Catalog;
+import com.brightcove.player.edge.VideoListener;
 import com.brightcove.player.model.Video;
 import com.brightcove.player.view.BrightcovePlayer;
 import com.brightcove.player.view.BrightcoveVideoView;
@@ -30,7 +30,9 @@ public class MainActivity extends BrightcovePlayer {
         super.onCreate(savedInstanceState);
 
         // Add a test video to the BrightcoveVideoView.
-        Catalog catalog = new Catalog("ZUPNyrUqRdcAtjytsjcJplyUc9ed8b0cD_eWIe36jXqNWKzIcE6i8A..");
+        Catalog catalog = new Catalog(brightcoveVideoView.getEventEmitter(),
+                "3636334163001",
+                "BCpkADawqM178_wgE5FkRtooqJ80UcfbASC-39Qy_k2MUy8VZV7d21Q42KntguD_DWph8r5vNdFAlfZqt4En97rshhh4pWa4Psk5SxnH6kmzTsrqZZBD6h-M5eUQ58GyWl6uUTLvj8EwL3si");
         catalog.findVideoByID("3637288623001", new VideoListener() {
             @Override
             public void onVideo(Video video) {

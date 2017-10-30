@@ -13,12 +13,12 @@ import com.brightcove.player.event.Event;
 import com.brightcove.player.event.EventEmitter;
 import com.brightcove.player.event.EventListener;
 import com.brightcove.player.event.EventType;
-import com.brightcove.player.media.DeliveryType;
-import com.brightcove.player.media.VideoFields;
 import com.brightcove.player.mediacontroller.BrightcoveMediaController;
 import com.brightcove.player.model.CuePoint;
+import com.brightcove.player.model.DeliveryType;
 import com.brightcove.player.model.Playlist;
 import com.brightcove.player.model.Source;
+import com.brightcove.player.model.VideoFields;
 import com.brightcove.player.util.StringUtil;
 import com.brightcove.player.view.BrightcovePlayer;
 import com.brightcove.player.view.BrightcoveVideoView;
@@ -75,22 +75,22 @@ public class MainActivity extends BrightcovePlayer {
 
         Catalog catalog = new Catalog(eventEmitter, getString(R.string.account_id), getString(R.string.policy_key));
         catalog.findPlaylistByReferenceID("play_2017_4_videos", new PlaylistListener() {
-                public void onPlaylist(Playlist playlist) {
-                    brightcoveVideoView.addAll(playlist.getVideos());
-                }
+            public void onPlaylist(Playlist playlist) {
+                brightcoveVideoView.addAll(playlist.getVideos());
+            }
 
-                public void onError(String error) {
-                    Log.e(TAG, error);
-                }
-            });
+            public void onError(String error) {
+                Log.e(TAG, error);
+            }
+        });
     }
 
     /**
      * Provide a sample illustrative ad.
      */
     private String[] googleAds = {
-        // Honda Pilot
-        "http://pubads.g.doubleclick.net/gampad/ads?sz=400x300&iu=%2F6062%2Fhanna_MA_group%2Fvideo_comp_app&ciu_szs=&impl=s&gdfp_req=1&env=vp&output=xml_vast2&unviewed_position_start=1&m_ast=vast&url=[referrer_url]&correlator=[timestamp]"
+            // Honda Pilot
+            "http://pubads.g.doubleclick.net/gampad/ads?sz=400x300&iu=%2F6062%2Fhanna_MA_group%2Fvideo_comp_app&ciu_szs=&impl=s&gdfp_req=1&env=vp&output=xml_vast2&unviewed_position_start=1&m_ast=vast&url=[referrer_url]&correlator=[timestamp]"
     };
 
     /**
