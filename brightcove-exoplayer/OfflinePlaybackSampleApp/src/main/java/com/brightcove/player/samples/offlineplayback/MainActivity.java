@@ -20,6 +20,7 @@ import com.brightcove.player.event.Event;
 import com.brightcove.player.event.EventEmitter;
 import com.brightcove.player.event.EventListener;
 import com.brightcove.player.event.EventType;
+import com.brightcove.player.model.MediaFormat;
 import com.brightcove.player.model.Playlist;
 import com.brightcove.player.model.Video;
 import com.brightcove.player.network.ConnectivityMonitor;
@@ -29,6 +30,7 @@ import com.brightcove.player.samples.offlineplayback.utils.ViewUtil;
 import com.brightcove.player.view.BrightcovePlayer;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -373,8 +375,22 @@ public class MainActivity extends BrightcovePlayer {
             catalog.resumeVideoDownload(video); }
 
         @Override
-        public void downloadVideo(@NonNull Video video) {
-            catalog.downloadVideo(video);
+        public void downloadVideo(@NonNull final Video video) {
+            catalog.getMediaFormatTracksAvailable(video, new MediaDownloadable.MediaFormatListener() {
+                @Override
+                public void onResult(MediaDownloadable mediaDownloadable, Bundle mediaFormatBundle) {
+                    ArrayList<MediaFormat> audio = mediaFormatBundle.getParcelableArrayList(MediaDownloadable.AUDIO_LANGUAGES);
+
+                    // You can put the same list or a modified audio list here.
+                    //mediaFormatBundle.putParcelableArrayList(MediaDownloadable.AUDIO_LANGUAGES, audio);
+
+                    // If you pass the returned Bundle(mediaFormatBundle) as is, it will download every audio and closed caption rendition.
+                    mediaDownloadable.setConfigurationBundle(mediaFormatBundle);
+
+                    catalog.downloadVideo(video);
+                }
+            });
+
         }
 
         @Override
