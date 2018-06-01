@@ -91,7 +91,7 @@ configure(subprojects.findAll {it.name.endsWith('SampleApp')}) {
     compile "com.brightcove.player:android-sdk:${anpVersion}"
   }
 
-  if (project.name.contains('IMA')) {
+  if (project.name.contains('IMA') || project.name.contains('VideoList')) {
     dependencies {
       compile "com.brightcove.player:android-ima-plugin:${anpVersion}"
       compile 'com.google.ads.interactivemedia.v3:interactivemedia:'+GOOGLE_IMA_SDK_VERSION

@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         videoListView = (RecyclerView) findViewById(R.id.video_list_view);
 
-        adapterView = new AdapterView();
+        adapterView = new AdapterView(this);
         videoListView.setAdapter(adapterView);
 
         catalog = new Catalog(eventEmitter, ACCOUNT_ID, POLICY_KEY);
